@@ -1,7 +1,8 @@
 {
-  "name": "sample-platformer",
-  "version": "1.0.0",
-  "description": "",
+  "name": "alan-and-ada",
+  "version": "0.1.0",
+  "description": "Alan and Ada programming game for kids",
+  "homepage": "https://github.com/WimYedema/alan-and-ada",
   "main": "index.js",
   "scripts": {
     "build:prod": "webpack --mode production",
