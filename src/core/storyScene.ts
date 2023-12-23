@@ -22,7 +22,7 @@ export class BeforeLevelScene extends ex.Scene {
             { x: 10, y: engine.drawHeight - 80, right: engine.drawWidth - 20, down: 80 },
             this.text
         );
-        bubble.on('sequence', () => { this.bubbleEnded = true; });
+        bubble.on(`sequence-${bubble.id}`, () => { this.bubbleEnded = true; });
         engine.add(bubble);
     }
     onPreUpdate(engine: ex.Engine, delta: number) {
