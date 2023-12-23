@@ -1,6 +1,6 @@
 # Alan & Ada kids programming
 
-Play sample [here](https://excaliburjs.com/sample-platformer)
+Play sample [here](https://wimyedema.github.io/alan-and-ada/)
 
 ## Start editing!
 
