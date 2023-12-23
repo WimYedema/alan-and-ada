@@ -1,7 +1,7 @@
 import * as ex from 'excalibur';
 import { Player } from '../actors/player';
 import { stats } from './stats';
-import { iSceneNode } from './storyScene';
+import { iSceneNode } from './cutScene';
 import { iLocation } from './location';
 
 export class LevelLayout extends ex.Scene implements iSceneNode {

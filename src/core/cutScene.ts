@@ -7,10 +7,9 @@ export interface iSceneNode {
     nextScene: string;
 }
 
-export class BeforeLevelScene extends ex.Scene {
+export class CutScene extends ex.Scene {
 
     protected text: string[] = [];
-    public bubbleEnded: boolean = false;
 
     onInitialize(engine: ex.Engine) {
         const actor = new ex.Actor({ x: 250, y: 500, anchor: ex.vec(0.5, 1) });
@@ -22,14 +21,7 @@ export class BeforeLevelScene extends ex.Scene {
             { x: 10, y: engine.drawHeight - 80, right: engine.drawWidth - 20, down: 80 },
             this.text
         );
-        bubble.on(`sequence-${bubble.id}`, () => { this.bubbleEnded = true; });
+        bubble.on(`sequence-${bubble.id}`, () => { stats.nextScene = true; });
         engine.add(bubble);
-    }
-    onPreUpdate(engine: ex.Engine, delta: number) {
-        if (this.bubbleEnded) {
-            if (engine.input.keyboard.wasPressed(ex.Input.Keys.Space) || engine.input.keyboard.wasPressed(ex.Input.Keys.Right)) {
-                stats.nextScene = true;
-            }
-        }
     }
 }

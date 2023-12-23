@@ -1,6 +1,6 @@
-import { BeforeLevelScene, iSceneNode } from '../core/storyScene';
+import { CutScene, iSceneNode } from '../core/cutScene';
 
-export class BeforeLevel1 extends BeforeLevelScene implements iSceneNode {
+export class BeforeLevel1 extends CutScene implements iSceneNode {
 
     nextScene = "level1";
     thisScene = "beforeLevel1";
@@ -14,7 +14,7 @@ export class BeforeLevel1 extends BeforeLevelScene implements iSceneNode {
     ]
 }
 
-export class BeforeLevel2 extends BeforeLevelScene {
+export class BeforeLevel2 extends CutScene {
     nextScene = "level2";
     thisScene = "beforeLevel2";
 
