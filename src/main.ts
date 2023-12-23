@@ -49,10 +49,6 @@ engine.goToScene(stats.currentNode);
 let showDebug = false;
 
 // Game events to handle
-engine.on('hidden', () => {
-    console.log('pause');
-    engine.stop();
-});
 engine.on('preupdate', () => {
     if (engine.input.keyboard.wasPressed(ex.Input.Keys.Escape)) {
         showDebug = !showDebug;
@@ -69,9 +65,16 @@ engine.on('preupdate', () => {
         engine.goToScene('gameover');
     }
 })
-engine.on('visible', () => {
-    console.log('start');
-    engine.start();
+// Detect hidden and visible outside of excalibur: it blocks events when the
+// engine is stopped so we cannot detect when to resume.
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') {
+        console.log('Window hidden');
+        engine.stop();
+    } else if (document.visibilityState === 'visible') {
+        console.log('Window visible');
+        engine.start();
+    }
 });
 
 // Start the engine
