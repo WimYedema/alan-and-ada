@@ -99,7 +99,6 @@ export class TextBubble extends ex.ScreenElement {
         this.timer.stop();
     }
     bubbleEnded() {
-        //this.kill();
         this.emit(`sequence-${this.id}`);
     }
 }

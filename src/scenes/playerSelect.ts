@@ -3,7 +3,7 @@ import { boy, girl } from '../core/resources';
 import { stats } from '../core/stats';
 import { iCharacter } from '../core/icharacter';
 import { TextBubble } from '../core/textBubble';
-import { iSceneNode } from '../core/storyScene';
+import { iSceneNode } from '../core/cutScene';
 
 
 class SelectorButton extends ex.ScreenElement {

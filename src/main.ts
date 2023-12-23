@@ -6,7 +6,7 @@ import { stats } from './core/stats';
 import { PlayerSelect } from './scenes/playerSelect';
 import { Level1 } from './scenes/level1';
 import { BeforeLevel1, BeforeLevel2 } from './scenes/beforeScenes';
-import { iSceneNode } from './core/storyScene';
+import { iSceneNode } from './core/cutScene';
 import { Level2 } from './scenes/level2';
 
 const engine = new ex.Engine({

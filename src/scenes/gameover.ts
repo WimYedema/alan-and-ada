@@ -1,5 +1,5 @@
 import * as ex from 'excalibur';
-import { iSceneNode } from '../core/storyScene';
+import { iSceneNode } from '../core/cutScene';
 import { stats } from '../core/stats';
 
 export class GameOver extends ex.Scene implements iSceneNode {

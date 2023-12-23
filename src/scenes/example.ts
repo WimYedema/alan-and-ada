@@ -4,7 +4,7 @@ import { Floor, Ground, Wall } from '../actors/ground';
 import { NPC } from '../actors/npc';
 import { Gate } from '../actors/gate';
 import { LevelLayout } from '../core/levelLayout';
-import { iSceneNode } from '../core/storyScene';
+import { iSceneNode } from '../core/cutScene';
 import { Potion } from '../actors/potion';
 import { tileSize } from '../core/resources';
 import { Lift } from '../actors/lift';
