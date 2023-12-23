@@ -1,10 +1,10 @@
 # Alan & Ada kids programming
 
-Play sample [here](https://wimyedema.github.io/alan-and-ada/)
+Play the game [here](https://wimyedema.github.io/alan-and-ada/)
 
 ## Start editing!
 
-Go to https://vscode.dev/github/WimYedema/platform-game
+Go to https://vscode.dev/github/WimYedema/alan-and-ada
 
 ## Running locally
 
