@@ -26,3 +26,13 @@ export class BeforeLevel2 extends CutScene {
     ]
 }
 
+export class BeforeLevel3 extends CutScene {
+    nextScene = "level3";
+    thisScene = "beforeLevel3";
+
+    public text = [
+        "Mooi. Je bent klaar voor het echte werk.",
+        "Het volgende level, src/scenes/level3.ts, mag je helemaal zelf bedenken."
+    ]
+}
+

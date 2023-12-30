@@ -3,10 +3,13 @@ import { Player } from '../actors/player';
 import { stats } from './stats';
 import { iSceneNode } from './cutScene';
 import { iLocation } from './location';
+import { tileSize } from './resources';
+import { Floor, Wall } from '../actors/ground';
 
 export class LevelLayout extends ex.Scene implements iSceneNode {
     thisScene: string = "";
     nextScene: string = "";
+    levelSize?: ex.Vector;
 
     playerStart: ex.Vector = ex.vec(2, 2);
 
@@ -59,6 +62,14 @@ export class LevelLayout extends ex.Scene implements iSceneNode {
         // For the test harness to be predicable
         if (!(window as any).__TESTING) {
             this.initCamera(player);
+            if (this.levelSize!==undefined) {
+                this.camera.strategy.lockToActor(player);
+                this.camera.strategy.limitCameraBounds(new ex.BoundingBox(0, 0, this.levelSize.x * tileSize, this.levelSize.y * tileSize));
+                engine.add(new Floor({ x: -1, y: -1, right: this.levelSize.x+2 }));
+                engine.add(new Floor({ x: -1, y: this.levelSize.y, right: this.levelSize.x+2 }));
+                engine.add(new Wall({ x: -1, y: 0, down: this.levelSize.y }));
+                engine.add(new Wall({ x: this.levelSize.x, y: 0, down: this.levelSize.y }));
+            }
         }
     }
 }

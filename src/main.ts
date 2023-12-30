@@ -5,10 +5,11 @@ import { GameOver } from './scenes/gameover';
 import { stats } from './core/stats';
 import { PlayerSelect } from './scenes/playerSelect';
 import { Level1 } from './scenes/level1';
-import { BeforeLevel1, BeforeLevel2 } from './scenes/beforeScenes';
+import { BeforeLevel1, BeforeLevel2, BeforeLevel3 } from './scenes/beforeScenes';
 import { iSceneNode } from './core/cutScene';
 import { Level2 } from './scenes/level2';
 import { Finish } from './scenes/finish';
+import { Level3 } from './scenes/level3';
 
 const engine = new ex.Engine({
     backgroundColor: ex.Color.fromHex('#5fcde4'),
@@ -43,6 +44,8 @@ addNode(new BeforeLevel1());
 addNode(new Level1());
 addNode(new BeforeLevel2());
 addNode(new Level2());
+addNode(new BeforeLevel3());
+addNode(new Level3());
 addNode(new Finish());
 addNode(new GameOver());
 

@@ -1,6 +1,5 @@
 import * as ex from 'excalibur';
 import { sandHalfSprite, tileSize } from '../core/resources';
-import { Player } from './player';
 import { iLocation } from '../core/location';
 
 export interface LiftArgs {
@@ -35,21 +34,5 @@ export class Lift extends ex.Actor implements LiftArgs {
                     .moveTo(this.endPos.x * tileSize, this.endPos.y * tileSize, 100)
                     .moveTo(this.startPos.x * tileSize, this.startPos.y * tileSize, 100));
         }
-        this.on('postcollision', (evt) => this.onPostCollision(evt));
     }
-
-    onPostCollision(evt: ex.PostCollisionEvent) {
-    }
-
-    // onPostUpdate(engine: ex.Engine, delta: number) {
-    //     if (this.vel.x < 0) {
-    //         this.graphics.use("left");
-    //     }
-    //     if (this.vel.x > 0) {
-    //         this.graphics.use("right");
-    //     }
-    //     if (this.vel.x === 0) {
-    //         this.graphics.use("idle")
-    //     }
-    // }
 }
