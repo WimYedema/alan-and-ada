@@ -17,7 +17,7 @@ export class Level1 extends LevelLayout implements iSceneNode {
         // Deze vloer staat te hoog. Zorg dat hij lager staat.
         engine.add(new Floor({
             x: 3,
-            y: 3,
+            y: 0,
             right: 6
         }));
         // LET OP: Na de aanpassing moet je het spel herladen!
