@@ -35,7 +35,7 @@ jobs:
         run: |
           npm ci
           npm run build:prod
-      #    npm run test : Re-enable after tests update
+          npm run jest
       # Runs a set of commands using the runners shell
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/main'
