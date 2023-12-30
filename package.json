@@ -10,7 +10,8 @@
     "dev": "webpack-dev-server --mode development --open",
     "start": "webpack-dev-server --mode development --open",
     "xtest": "npm run build:prod && ex-test -d ./dist -t ./test/integration/ex-tests.js",
-    "test": "npm run build:prod && jest"
+    "test": "npm run build:prod && jest",
+    "jest": "jest"
   },
   "author": "",
   "license": "ISC",
