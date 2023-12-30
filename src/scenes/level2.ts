@@ -14,11 +14,11 @@ export class Level2 extends LevelLayout implements iSceneNode {
         engine.add(new Floor({ x: 1, y: 5, right: 2 }));
 
         // ---
-        // Deze vloer staat te hoog. Zorg dat hij lager staat.
+        // Deze vloer is niet lang genoeg. Kan jij het oplossen?
         engine.add(new Floor({
-            x: 2,
+            x: 3,
             y: 7,
-            right: 8
+            right: 1
         }));
         // LET OP: Na de aanpassing moet je het spel herladen!
         // ---

@@ -1,10 +1,7 @@
 # Alan & Ada kids programming
 
-Play the game [here](https://wimyedema.github.io/alan-and-ada/)
-
-## Start editing!
-
-Go to https://vscode.dev/github/WimYedema/alan-and-ada
+Play the [game](https://wimyedema.github.io/alan-and-ada/) and 
+start [editing](https://vscode.dev/github/WimYedema/alan-and-ada)!
 
 ## Running locally
 
@@ -18,6 +15,15 @@ Go to https://vscode.dev/github/WimYedema/alan-and-ada
 
 * Run `npm run build:dev` to produce javascript bundles for debugging in the `dist/` folder
 * Run `npm run build:prod` to produce javascript bundles for production (minified) in the `dist/` folder
+
+## Run-time developer aids
+
+The following key combo's can be used to help development:
+
+| Key combo    | Description                                        |
+| ------------ | -------------------------------------------------- |
+| **Escape**   | Enter debug-mode: visualize bounding boxes and ids |
+| **N**        | Only in debug-mode: finish the current level       |
 
 # Credits
 

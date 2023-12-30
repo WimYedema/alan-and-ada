@@ -53,6 +53,8 @@ engine.on('preupdate', () => {
     if (engine.input.keyboard.wasPressed(ex.Input.Keys.Escape)) {
         showDebug = !showDebug;
         engine.showDebug(showDebug);
+    } else if(showDebug && engine.input.keyboard.wasPressed(ex.Input.Keys.KeyN)) {
+        stats.nextScene = true;
     }
     if (stats.nextScene) {
         console.log("switching from ", stats.currentNode);
