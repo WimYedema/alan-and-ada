@@ -25,7 +25,7 @@ The following key combo's can be used to help development:
 
 | Key combo    | Description                                        |
 | ------------ | -------------------------------------------------- |
-| **<Escape>** | Enter debug-mode: visualize bounding boxes and ids |
+| **Escape**   | Enter debug-mode: visualize bounding boxes and ids |
 | **N**        | Only in debug-mode: finish the current level       |
 
 # Credits
