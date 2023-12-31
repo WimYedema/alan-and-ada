@@ -2,14 +2,28 @@ import * as ex from 'excalibur';
 import { iSceneNode } from '../core/cutScene';
 import { stats } from '../core/stats';
 
-export class GameOver extends ex.Scene implements iSceneNode {
-    thisScene = "gameover";
+export class Finish extends ex.Scene implements iSceneNode {
+    thisScene = "finish";
     nextScene = "playerSelect";
 
     onInitialize(engine: ex.Engine) {
-        const label = new ex.Label({
-            text: "GAME OVER",
-            pos: ex.vec(engine.drawWidth/2, engine.drawHeight/3),
+        const congrats = new ex.Label({
+            text: "Gefeliciteerd!\nDit is het",
+            pos: ex.vec(engine.drawWidth/2, engine.drawHeight/4),
+            font: new ex.Font({
+                quality:4, 
+                size: 20, 
+                unit: ex.FontUnit.Px, 
+                textAlign: ex.TextAlign.Center
+            }),
+            color: ex.Color.White
+        });
+        congrats.transform.coordPlane = ex.CoordPlane.Screen;
+        engine.add(congrats);
+
+        const theEnd = new ex.Label({
+            text: "Einde",
+            pos: ex.vec(engine.drawWidth/2, engine.drawHeight/4+100),
             font: new ex.Font({
                 quality:4, 
                 size: 80, 
@@ -19,9 +33,8 @@ export class GameOver extends ex.Scene implements iSceneNode {
             }),
             color: ex.Color.White
         });
-        label.transform.coordPlane = ex.CoordPlane.Screen;
-        engine.add(label);
-
+        theEnd.transform.coordPlane = ex.CoordPlane.Screen;
+        engine.add(theEnd);
 
         const credits = new ex.Label({
             text: "Created by Wim Yedema\nTiles by @CamTatz\nAlan and Ada by Game Art 2D\nOther sprites by Excalibur",
