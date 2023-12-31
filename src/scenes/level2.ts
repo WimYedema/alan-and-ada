@@ -6,7 +6,7 @@ import { iSceneNode } from '../core/cutScene';
 
 export class Level2 extends LevelLayout implements iSceneNode {
     thisScene = "level2";
-    nextScene = "finish";
+    nextScene = "beforeLevel3";
 
     layoutLevel(engine: ex.Engine) {
         this.playerStartsAt({ x: 2, y: 2 });

@@ -79,7 +79,6 @@ export class Player extends ex.Actor {
 
     onPostCollision(evt: ex.PostCollisionEvent) {
         // Bot has collided with it's Top of another collider
-        //console.log(evt.other.name);
         this.groundVel = ex.Vector.Zero;
         if (evt.side === ex.Side.Bottom && evt.other instanceof Ground) {
             this.onGround = true;
@@ -135,8 +134,11 @@ export class Player extends ex.Actor {
             this.hurt = this.hurtTime > 0;
         } else {
             // Reset x velocity
-            this.vel.x = 0;
-            this.vel = this.vel.add(this.groundVel);
+            this.vel.x = this.groundVel.x;
+            if (this.groundVel.y!=0) {
+                this.vel.y = this.groundVel.y;
+            }
+            this.groundVel.y = 0;
             // Player input
             if (engine.input.keyboard.isHeld(ex.Input.Keys.Left)) {
                 this.vel.x -= 200 * this.scaleTarget;
