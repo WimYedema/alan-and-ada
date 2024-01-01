@@ -73,8 +73,12 @@ export class LevelLayout extends ex.Scene implements iSceneNode {
             }
         }
     }
+    onActivate(context: ex.SceneActivationContext<unknown>): void {
+        // for(let a in this.actors) {
+        //     console.log(this.actors[a]);
+        // }
+    }
     onGameOver() {
-        console.log("GAME OVER");
         if (this.player!==undefined) {
             this.player.pos = ex.vec(this.playerStart.x*tileSize, this.playerStart.y*tileSize);
         }

@@ -39,9 +39,4 @@ export class Example extends LevelLayout implements iSceneNode {
         engine.add(new Floor({ x: 16, y: 16, right: 1 }));
         engine.add(new Wall({ x: 17, y: 0, down: 20 }));
     }
-    onActivate(context: ex.SceneActivationContext<unknown>): void {
-        for(let a in this.actors) {
-            console.log(this.actors[a]);
-        }
-    }
 }

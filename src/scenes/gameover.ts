@@ -47,7 +47,6 @@ export class GameOver extends ex.Scene implements iSceneNode {
     onPostUpdate(engine: ex.Engine, _delta: number): void {
         if (engine.input.keyboard.wasPressed(ex.Input.Keys.Space)) {
             engine.emit("gameover");
-            stats.reset();
         }
     }
 }
