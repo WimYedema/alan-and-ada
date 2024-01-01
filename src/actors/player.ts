@@ -17,7 +17,7 @@ export class Player extends ex.Actor {
 
     constructor(x: number, y: number) {
         super({
-            name: 'Bot',
+            name: 'Player',
             pos: new ex.Vector(x * tileSize, y * tileSize),
             anchor: new ex.Vector(0.5, 1),
             collisionType: ex.CollisionType.Active,
