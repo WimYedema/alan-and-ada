@@ -4,8 +4,9 @@ import { Player } from './player';
 import { stats } from '../core/stats';
 import { Ground } from './ground';
 import { iLocation } from '../core/location';
+import { BackgroundActor } from '../core/actor';
 
-export class Baddie extends ex.Actor {
+export class Baddie extends BackgroundActor {
     public hit = false;
     public hitTime: number = 0;
     public direction: ex.Vector = ex.vec(100, 0);
@@ -21,10 +22,7 @@ export class Baddie extends ex.Actor {
         });
     }
 
-    // OnInitialize is called before the 1st actor update
-    onInitialize(engine: ex.Engine) {
-        // Initialize actor
-
+    preInitialize(engine: ex.Engine) {
         // Setup visuals
         const idle = ex.Animation.fromSpriteSheet(baddieSpriteSheet, [0, 1], 100);
         idle.scale = new ex.Vector(2, 2);
@@ -51,7 +49,12 @@ export class Baddie extends ex.Actor {
         this.on('precollision', (evt) => this.onPreCollision(evt));
         this.on('postcollision', (evt) => this.onPostCollision(evt));
     }
+    onActivate() {
+        super.onActivate();
 
+        this.hit = false;
+        this.hitTime = 0;
+    }
     onPostCollision(evt: ex.PostCollisionEvent) {
         if (evt.other instanceof Player) {
             if (evt.side === ex.Side.Top && !evt.other.hurt) {

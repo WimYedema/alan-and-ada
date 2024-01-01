@@ -5,6 +5,7 @@ import { iSceneNode } from './cutScene';
 import { iLocation } from './location';
 import { tileSize } from './resources';
 import { Floor, Wall } from '../actors/ground';
+import { BackgroundActor } from './actor';
 
 export class LevelLayout extends ex.Scene implements iSceneNode {
     thisScene: string = "";
@@ -73,10 +74,8 @@ export class LevelLayout extends ex.Scene implements iSceneNode {
             }
         }
     }
-    onActivate(context: ex.SceneActivationContext<unknown>): void {
-        // for(let a in this.actors) {
-        //     console.log(this.actors[a]);
-        // }
+    onActivate(context: ex.SceneActivationContext<undefined>): void {
+        console.log("ACTIVATE");
     }
     onGameOver() {
         if (this.player!==undefined) {
