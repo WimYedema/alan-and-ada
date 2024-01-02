@@ -4,11 +4,18 @@ import { Player } from './player';
 import { stats } from '../core/stats';
 import { Ground } from './ground';
 import { iLocation } from '../core/location';
-import { BackgroundActor } from '../core/actor';
+import { ActorState, SceneActor } from '../core/actor';
 
-export class Baddie extends BackgroundActor {
-    public hit = false;
-    public hitTime: number = 0;
+export interface BaddieState {
+    hit: boolean;
+    hitTime: number;
+}
+    
+export class Baddie extends SceneActor<BaddieState> {
+    protected _state: {
+        hit: boolean;
+        hitTime: number;
+    } = { hit: false, hitTime: 0};
     public direction: ex.Vector = ex.vec(100, 0);
 
     constructor(args: iLocation) {
@@ -49,12 +56,6 @@ export class Baddie extends BackgroundActor {
         this.on('precollision', (evt) => this.onPreCollision(evt));
         this.on('postcollision', (evt) => this.onPostCollision(evt));
     }
-    onActivate() {
-        super.onActivate();
-
-        this.hit = false;
-        this.hitTime = 0;
-    }
     onPostCollision(evt: ex.PostCollisionEvent) {
         if (evt.other instanceof Player) {
             if (evt.side === ex.Side.Top && !evt.other.hurt) {
@@ -69,8 +70,8 @@ export class Baddie extends BackgroundActor {
                 // Update stats
                 stats.score += 1;
             } else if (evt.side == ex.Side.Left || evt.side == ex.Side.Right) {
-                this.hit = true;
-                this.hitTime = 500;
+                this._state.hit = true;
+                this._state.hitTime = 500;
                 this.direction = ex.vec(-this.direction.x, this.direction.y);
                 this.vel = ex.Vector.Zero;
             }
@@ -90,10 +91,10 @@ export class Baddie extends BackgroundActor {
 
     // Change animation based on velocity 
     onPreUpdate(engine: ex.Engine, delta: number): void {
-        if (this.hit) {
-            this.hitTime -= delta;
-            if (this.hitTime <= 0) {
-                this.hit = false;
+        if (this._state.hit) {
+            this._state.hitTime -= delta;
+            if (this._state.hitTime <= 0) {
+                this._state.hit = false;
                 this.vel = this.direction;
             }
         }

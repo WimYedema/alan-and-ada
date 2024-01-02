@@ -5,7 +5,7 @@ import { iSceneNode } from './cutScene';
 import { iLocation } from './location';
 import { tileSize } from './resources';
 import { Floor, Wall } from '../actors/ground';
-import { BackgroundActor } from './actor';
+import { SceneActor } from './actor';
 
 export class LevelLayout extends ex.Scene implements iSceneNode {
     thisScene: string = "";

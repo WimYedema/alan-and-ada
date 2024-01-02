@@ -19,6 +19,10 @@ export class Actor extends ex.Actor {
     }
 }
 
+interface IActorState {
+    [index: string]: any;
+}
+
 export class ActorState {
     public pos: ex.Vector;
     public vel: ex.Vector;
@@ -43,17 +47,33 @@ export class ActorState {
     }
 }
 
-export class BackgroundActor extends Actor {
+export abstract class SceneActor<StateType> extends Actor {
     public initialState?: ActorState;
+    protected abstract _state?: any;
 
-    saveState() : ActorState {
-        return new ActorState(this);
+    get state() : ActorState&StateType {
+        return { ...this._state, ...new ActorState(this)};
+    }
+    set state(state: ActorState&any) {
+        for(let key in this._state) {
+            this._state[key] = state[key];
+        }
+        this.pos = state.pos;
+        this.vel = state.vel;
+        this.acc = state.acc;
+        this.angularVelocity = state.angularVelocity;
+        this.rotation = state.rotation;
+        this.body.collisionType = state.body.collisionType;
+
+        if (this.isKilled()) {
+            this.scene.add(this);
+        }
     }
     preInitialize(engine: ex.Engine) {
         
     }
     postInitialize(engine: ex.Engine) {
-        this.initialState = this.saveState();
+        this.initialState = this.state;
         this.scene.on('activate', () => this.onActivate());
     }
 
@@ -64,16 +84,6 @@ export class BackgroundActor extends Actor {
     }
     onActivate() {
         if (this.initialState === undefined) return;
-
-        this.pos = this.initialState.pos;
-        this.vel = this.initialState.vel;
-        this.acc = this.initialState.acc;
-        this.angularVelocity = this.initialState.angularVelocity;
-        this.rotation = this.initialState.rotation;
-        this.body.collisionType = this.initialState.body.collisionType;
-
-        if (this.isKilled()) {
-            this.scene.add(this);
-        }
+        this.state = this.initialState;
     }
 }
