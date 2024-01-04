@@ -4,11 +4,16 @@ import { Player } from './player';
 import { stats } from '../core/stats';
 import { Ground } from './ground';
 import { iLocation } from '../core/location';
+import { SceneActor } from '../core/actor';
 
-export class Baddie extends ex.Actor {
-    public hit = false;
-    public hitTime: number = 0;
-    public direction: ex.Vector = ex.vec(100, 0);
+export class BaddieState {
+    hit: boolean = false;
+    hitTime: number = 0;
+    direction: ex.Vector = ex.vec(100, 0);
+}
+    
+export class Baddie extends SceneActor<BaddieState> {
+    protected _state = new BaddieState();
 
     constructor(args: iLocation) {
         super({
@@ -21,10 +26,7 @@ export class Baddie extends ex.Actor {
         });
     }
 
-    // OnInitialize is called before the 1st actor update
-    onInitialize(engine: ex.Engine) {
-        // Initialize actor
-
+    initializeActor(engine: ex.Engine) {
         // Setup visuals
         const idle = ex.Animation.fromSpriteSheet(baddieSpriteSheet, [0, 1], 100);
         idle.scale = new ex.Vector(2, 2);
@@ -45,13 +47,12 @@ export class Baddie extends ex.Actor {
         }
 
         // Start moving
-        this.vel = this.direction;
+        this.vel = this._state.direction;
 
         // Handle being stomped by the player
         this.on('precollision', (evt) => this.onPreCollision(evt));
         this.on('postcollision', (evt) => this.onPostCollision(evt));
     }
-
     onPostCollision(evt: ex.PostCollisionEvent) {
         if (evt.other instanceof Player) {
             if (evt.side === ex.Side.Top && !evt.other.hurt) {
@@ -66,9 +67,9 @@ export class Baddie extends ex.Actor {
                 // Update stats
                 stats.score += 1;
             } else if (evt.side == ex.Side.Left || evt.side == ex.Side.Right) {
-                this.hit = true;
-                this.hitTime = 500;
-                this.direction = ex.vec(-this.direction.x, this.direction.y);
+                this._state.hit = true;
+                this._state.hitTime = 500;
+                this._state.direction = ex.vec(-this._state.direction.x, this._state.direction.y);
                 this.vel = ex.Vector.Zero;
             }
         }
@@ -76,22 +77,22 @@ export class Baddie extends ex.Actor {
     onPreCollision(evt: ex.PreCollisionEvent) {
         if (evt.other instanceof Ground) {
             if (evt.side === ex.Side.Left) {
-                this.direction = ex.vec(-this.direction.x, this.direction.y);
-                this.vel = this.direction;
+                this._state.direction = ex.vec(-this._state.direction.x, this._state.direction.y);
+                this.vel = this._state.direction;
             } else if (evt.side === ex.Side.Right) {
-                this.direction = ex.vec(-this.direction.x, this.direction.y);
-                this.vel = this.direction;
+                this._state.direction = ex.vec(-this._state.direction.x, this._state.direction.y);
+                this.vel = this._state.direction;
             }
         }
     }
 
     // Change animation based on velocity 
     onPreUpdate(engine: ex.Engine, delta: number): void {
-        if (this.hit) {
-            this.hitTime -= delta;
-            if (this.hitTime <= 0) {
-                this.hit = false;
-                this.vel = this.direction;
+        if (this._state.hit) {
+            this._state.hitTime -= delta;
+            if (this._state.hitTime <= 0) {
+                this._state.hit = false;
+                this.vel = this._state.direction;
             }
         }
     }

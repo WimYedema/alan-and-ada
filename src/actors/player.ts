@@ -1,23 +1,46 @@
 import * as ex from 'excalibur';
-import { girl, boy, Resources, tileSize } from '../core/resources';
+import { girl, boy, Resources, tileSize, playerCharacters } from '../core/resources';
 import { Baddie } from './baddie';
 import { stats } from '../core/stats';
 import { Ground } from './ground';
 import { iArtifact } from '../core/iartifact';
 import { Lift } from './lift';
+import { GameActor } from '../core/actor';
 
-export class Player extends ex.Actor {
-    public onGround = true;
-    public atArtifact: iArtifact | null = null;
-    public jumped = false;
-    public hurt = false;
-    public hurtTime: number = 0;
-    public scaleTarget: number = 1;
-    public groundVel: ex.Vector = ex.Vector.Zero;
+export class PlayerState {
+    charName: string = "alan";
+    onGround: boolean = true;
+    atArtifact: iArtifact | null = null;
+    hurt = false;
+    hurtTime: number = 0;
+    scaleTarget: number = 1;
+    groundVel: ex.Vector = ex.Vector.Zero;
+}
 
+export class Player extends GameActor<PlayerState> {
+    protected _state = new PlayerState();
+
+    set hurt(hurt: boolean) {
+        this._state.hurt = hurt;
+    }
+    get hurt() : boolean {
+        return this._state.hurt;
+    }
+    set scaleTarget(target: number) {
+        this._state.scaleTarget = target;
+    }
+    get scaleTarget() : number {
+        return this._state.scaleTarget;
+    }
+    set atArtifact(artifact: iArtifact|null) {
+        this._state.atArtifact = artifact;
+    }
+    get atArtifact() : iArtifact|null {
+        return this._state.atArtifact;
+    }
     constructor(x: number, y: number) {
         super({
-            name: 'Bot',
+            name: 'Player',
             pos: new ex.Vector(x * tileSize, y * tileSize),
             anchor: new ex.Vector(0.5, 1),
             collisionType: ex.CollisionType.Active,
@@ -25,14 +48,18 @@ export class Player extends ex.Actor {
             collider: ex.Shape.Box(32, 50, new ex.Vector(0.5, 1))
         });
     }
-
-    // OnInitialize is called before the 1st actor update
-    onInitialize(engine: ex.Engine) {
+    onActivate(engine: ex.Engine) {
+        if (this._state.charName != stats.charName) {
+            this.reinitialize(engine);
+        }
+    }
+    initializeActor(engine: ex.Engine) {
         // Initialize actor
-        const hurt_sprite = stats.character.hurt;
-        const idle_sprite = stats.character.idle;
-        const jump_sprite = stats.character.jump;
-        const run_sprite = stats.character.run;
+        this._state.charName = stats.charName;
+        const hurt_sprite = playerCharacters[stats.charName].hurt;
+        const idle_sprite = playerCharacters[stats.charName].idle;
+        const jump_sprite = playerCharacters[stats.charName].jump;
+        const run_sprite = playerCharacters[stats.charName].run;
 
         // Setup visuals
         const scale = new ex.Vector(0.125, 0.125);
@@ -79,19 +106,19 @@ export class Player extends ex.Actor {
 
     onPostCollision(evt: ex.PostCollisionEvent) {
         // Bot has collided with it's Top of another collider
-        this.groundVel = ex.Vector.Zero;
+        this._state.groundVel = ex.Vector.Zero;
         if (evt.side === ex.Side.Bottom && evt.other instanceof Ground) {
-            this.onGround = true;
+            this._state.onGround = true;
         } else if (evt.side === ex.Side.Bottom && evt.other instanceof Lift) {
-            this.onGround = true;
-            this.groundVel = evt.other.vel;
+            this._state.onGround = true;
+            this._state.groundVel = evt.other.vel;
         }
 
         // Bot has collided on the side, display hurt animation
         if ((evt.side === ex.Side.Left ||
             evt.side === ex.Side.Right) &&
             evt.other instanceof Baddie) {
-            if (!this.hurt) {
+            if (!this._state.hurt) {
                 // this.scene.camera.zoomOverTime(2, 500);
                 if (this.vel.x < 0) {
                     this.graphics.use("hurtleft");
@@ -102,10 +129,10 @@ export class Player extends ex.Actor {
                 else this.vel.x = -100;
             }
             stats.health -= 1;
-            this.hurt = true;
-            this.hurtTime = 1000;
+            this._state.hurt = true;
+            this._state.hurtTime = 1000;
             this.vel.y = -200;
-            this.onGround = false;
+            this._state.onGround = false;
             Resources.hit.play(.1);
             if (stats.health == 0) {
                 // Remove ability to collide
@@ -121,46 +148,46 @@ export class Player extends ex.Actor {
 
     // After main update, once per frame execute this code
     onPreUpdate(engine: ex.Engine, delta: number) {
-        if (this.scale.x < this.scaleTarget) {
-            const new_scale = Math.min(this.scale.x + 0.01, this.scaleTarget);
+        if (this.scale.x < this._state.scaleTarget) {
+            const new_scale = Math.min(this.scale.x + 0.01, this._state.scaleTarget);
             this.scale = ex.vec(new_scale, new_scale);
-        } else if (this.scaleTarget < this.scale.x) {
-            const new_scale = Math.max(this.scale.x - 0.01, this.scaleTarget);
+        } else if (this._state.scaleTarget < this.scale.x) {
+            const new_scale = Math.max(this.scale.x - 0.01, this._state.scaleTarget);
             this.scale = ex.vec(new_scale, new_scale);
         }
         // If hurt, count down
-        if (this.hurt) {
-            this.hurtTime -= delta;
-            this.hurt = this.hurtTime > 0;
+        if (this._state.hurt) {
+            this._state.hurtTime -= delta;
+            this._state.hurt = this._state.hurtTime > 0;
         } else {
             // Reset x velocity
-            this.vel.x = this.groundVel.x;
-            if (this.groundVel.y!=0) {
-                this.vel.y = this.groundVel.y;
+            this.vel.x = this._state.groundVel.x;
+            if (this._state.groundVel.y!=0) {
+                this.vel.y = this._state.groundVel.y;
             }
-            this.groundVel.y = 0;
+            this._state.groundVel.y = 0;
             // Player input
             if (engine.input.keyboard.isHeld(ex.Input.Keys.Left)) {
-                this.vel.x -= 200 * this.scaleTarget;
+                this.vel.x -= 200 * this._state.scaleTarget;
             } else if (engine.input.keyboard.isHeld(ex.Input.Keys.Right)) {
-                this.vel.x += 200 * this.scaleTarget;
+                this.vel.x += 200 * this._state.scaleTarget;
             }
 
-            if (engine.input.keyboard.wasPressed(ex.Input.Keys.Space) && this.atArtifact !== null) {
-                this.atArtifact.activateArtifact(this);
+            if (engine.input.keyboard.wasPressed(ex.Input.Keys.Space) && this._state.atArtifact !== null) {
+                this._state.atArtifact.activateArtifact(this);
             }
-            if (engine.input.keyboard.wasPressed(ex.Input.Keys.Up) && this.onGround) {
-                this.vel.y = -tileSize * 20 * Math.sqrt(this.scaleTarget / 3);
-                this.onGround = false;
+            if (engine.input.keyboard.wasPressed(ex.Input.Keys.Up) && this._state.onGround) {
+                this.vel.y = -tileSize * 20 * Math.sqrt(this._state.scaleTarget / 3);
+                this._state.onGround = false;
                 this.graphics.use("jumpleft");
                 Resources.jump.play(.1);
             }
         }
 
         // Change animation based on velocity
-        if (!this.hurt) {
-            let relvel = this.vel.sub(this.groundVel);
-            if (this.onGround) {
+        if (!this._state.hurt) {
+            let relvel = this.vel.sub(this._state.groundVel);
+            if (this._state.onGround) {
                 if (relvel.x === 0) {
                     this.graphics.use("idle")
                 } else if (relvel.x < 0) {

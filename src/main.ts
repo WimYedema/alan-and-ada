@@ -72,6 +72,10 @@ engine.on('preupdate', () => {
         engine.goToScene('gameover');
     }
 })
+engine.on('gameover', () => {
+    console.log("Game over reset");
+    stats.reset();
+})
 // Detect hidden and visible outside of excalibur: it blocks events when the
 // engine is stopped so we cannot detect when to resume.
 document.addEventListener('visibilitychange', () => {

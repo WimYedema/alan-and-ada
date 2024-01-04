@@ -5,6 +5,7 @@ import { iSceneNode } from './cutScene';
 import { iLocation } from './location';
 import { tileSize } from './resources';
 import { Floor, Wall } from '../actors/ground';
+import { SceneActor } from './actor';
 
 export class LevelLayout extends ex.Scene implements iSceneNode {
     thisScene: string = "";
@@ -12,6 +13,7 @@ export class LevelLayout extends ex.Scene implements iSceneNode {
     levelSize?: ex.Vector;
 
     playerStart: ex.Vector = ex.vec(2, 2);
+    player?: Player;
 
     layoutLevel(engine: ex.Engine) {
 
@@ -27,9 +29,9 @@ export class LevelLayout extends ex.Scene implements iSceneNode {
 
         this.layoutLevel(engine);
 
-        const player = new Player(this.playerStart.x, this.playerStart.y);
+        this.player = new Player(this.playerStart.x, this.playerStart.y);
 
-        engine.add(player);
+        engine.add(this.player);
         let assignment = "src/scenes/" + this.thisScene + ".ts";
 
         const scoreLabel = new ex.Label({
@@ -61,9 +63,9 @@ export class LevelLayout extends ex.Scene implements iSceneNode {
 
         // For the test harness to be predicable
         if (!(window as any).__TESTING) {
-            this.initCamera(player);
+            this.initCamera(this.player);
             if (this.levelSize!==undefined) {
-                this.camera.strategy.lockToActor(player);
+                this.camera.strategy.lockToActor(this.player);
                 this.camera.strategy.limitCameraBounds(new ex.BoundingBox(0, 0, this.levelSize.x * tileSize, this.levelSize.y * tileSize));
                 engine.add(new Floor({ x: -1, y: -1, right: this.levelSize.x+2 }));
                 engine.add(new Floor({ x: -1, y: this.levelSize.y, right: this.levelSize.x+2 }));

@@ -133,6 +133,10 @@ const boy: iCharacter = {
         }
     }),
 };
+const playerCharacters: {[id:string]: iCharacter} = {
+    "alan": boy,
+    "ada": girl
+};
 const botSpriteSheet = ex.SpriteSheet.fromImageSource({
     image: Resources.bot,
     grid: {
@@ -192,8 +196,7 @@ for (const res in Resources) {
 
 export {
     Resources, loader, tileSize,
-    girl,
-    boy,
+    playerCharacters, girl, boy,
     botSpriteSheet, botRedSpriteSheet,
     baddieSpriteSheet,
     gateOpenSpriteSheet, gateClosedSpriteSheet,
