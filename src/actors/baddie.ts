@@ -4,19 +4,16 @@ import { Player } from './player';
 import { stats } from '../core/stats';
 import { Ground } from './ground';
 import { iLocation } from '../core/location';
-import { ActorState, SceneActor } from '../core/actor';
+import { SceneActor } from '../core/actor';
 
-export interface BaddieState {
-    hit: boolean;
-    hitTime: number;
+export class BaddieState {
+    hit: boolean = false;
+    hitTime: number = 0;
+    direction: ex.Vector = ex.vec(100, 0);
 }
     
 export class Baddie extends SceneActor<BaddieState> {
-    protected _state: {
-        hit: boolean;
-        hitTime: number;
-    } = { hit: false, hitTime: 0};
-    public direction: ex.Vector = ex.vec(100, 0);
+    protected _state = new BaddieState();
 
     constructor(args: iLocation) {
         super({
@@ -50,7 +47,7 @@ export class Baddie extends SceneActor<BaddieState> {
         }
 
         // Start moving
-        this.vel = this.direction;
+        this.vel = this._state.direction;
 
         // Handle being stomped by the player
         this.on('precollision', (evt) => this.onPreCollision(evt));
@@ -72,7 +69,7 @@ export class Baddie extends SceneActor<BaddieState> {
             } else if (evt.side == ex.Side.Left || evt.side == ex.Side.Right) {
                 this._state.hit = true;
                 this._state.hitTime = 500;
-                this.direction = ex.vec(-this.direction.x, this.direction.y);
+                this._state.direction = ex.vec(-this._state.direction.x, this._state.direction.y);
                 this.vel = ex.Vector.Zero;
             }
         }
@@ -80,11 +77,11 @@ export class Baddie extends SceneActor<BaddieState> {
     onPreCollision(evt: ex.PreCollisionEvent) {
         if (evt.other instanceof Ground) {
             if (evt.side === ex.Side.Left) {
-                this.direction = ex.vec(-this.direction.x, this.direction.y);
-                this.vel = this.direction;
+                this._state.direction = ex.vec(-this._state.direction.x, this._state.direction.y);
+                this.vel = this._state.direction;
             } else if (evt.side === ex.Side.Right) {
-                this.direction = ex.vec(-this.direction.x, this.direction.y);
-                this.vel = this.direction;
+                this._state.direction = ex.vec(-this._state.direction.x, this._state.direction.y);
+                this.vel = this._state.direction;
             }
         }
     }
@@ -95,7 +92,7 @@ export class Baddie extends SceneActor<BaddieState> {
             this._state.hitTime -= delta;
             if (this._state.hitTime <= 0) {
                 this._state.hit = false;
-                this.vel = this.direction;
+                this.vel = this._state.direction;
             }
         }
     }

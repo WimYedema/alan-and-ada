@@ -60,7 +60,7 @@ export class LevelLayout extends ex.Scene implements iSceneNode {
         background.graphics.add('poly', poly);
         background.graphics.show('poly');
         engine.add(background);
-        engine.on("gameover", () => this.onGameOver());
+        
         // For the test harness to be predicable
         if (!(window as any).__TESTING) {
             this.initCamera(this.player);
@@ -76,10 +76,5 @@ export class LevelLayout extends ex.Scene implements iSceneNode {
     }
     onActivate(context: ex.SceneActivationContext<undefined>): void {
         console.log("ACTIVATE");
-    }
-    onGameOver() {
-        if (this.player!==undefined) {
-            this.player.pos = ex.vec(this.playerStart.x*tileSize, this.playerStart.y*tileSize);
-        }
     }
 }

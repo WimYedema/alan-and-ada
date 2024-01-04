@@ -1,5 +1,4 @@
 import * as ex from 'excalibur';
-import { iLocation } from './location';
 
 export class Actor extends ex.Actor {
     kill(respawn?: number): void {
@@ -17,10 +16,6 @@ export class Actor extends ex.Actor {
             this.kill(respawn);
         }, seconds * 1000);
     }
-}
-
-interface IActorState {
-    [index: string]: any;
 }
 
 export class ActorState {
@@ -47,7 +42,7 @@ export class ActorState {
     }
 }
 
-export abstract class SceneActor<StateType> extends Actor {
+export abstract class ActorWithState<StateType> extends Actor {
     public initialState?: ActorState;
     protected abstract _state?: any;
 
@@ -74,7 +69,6 @@ export abstract class SceneActor<StateType> extends Actor {
     }
     postInitialize(engine: ex.Engine) {
         this.initialState = this.state;
-        this.scene.on('activate', () => this.onActivate());
     }
 
     onInitialize(engine: ex.Engine) {
@@ -82,7 +76,25 @@ export abstract class SceneActor<StateType> extends Actor {
         super.onInitialize(engine);
         this.postInitialize(engine);
     }
+}
+
+export abstract class SceneActor<StateType> extends ActorWithState<StateType> {
+    postInitialize(engine: ex.Engine) {
+        super.postInitialize(engine);
+        this.scene.on('activate', () => this.onActivate());
+    }
     onActivate() {
+        if (this.initialState === undefined) return;
+        this.state = this.initialState;
+    }
+}
+
+export abstract class GameActor<StateType> extends ActorWithState<StateType> {
+    postInitialize(engine: ex.Engine) {
+        super.postInitialize(engine);
+        engine.on('gameover', () => this.onGameover());
+    }
+    onGameover() {
         if (this.initialState === undefined) return;
         this.state = this.initialState;
     }

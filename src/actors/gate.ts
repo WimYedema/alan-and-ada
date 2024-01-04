@@ -4,12 +4,18 @@ import { Player } from './player';
 import { stats } from '../core/stats';
 import { iLocation } from '../core/location';
 import { iArtifact } from '../core/iartifact';
+import { GameActor } from '../core/actor';
 
 export interface GateArgs extends iLocation {
     goal: number;
 }
-export class Gate extends ex.Actor implements iArtifact {
-    public isOpen = false;
+
+export class GateState {
+    isOpen: boolean = false;
+}
+
+export class Gate extends GameActor<GateState> implements iArtifact {
+    protected _state = new GateState();
 
     constructor(args: GateArgs) {
         super({
@@ -37,9 +43,9 @@ export class Gate extends ex.Actor implements iArtifact {
         // Custom draw after local tranform, draws word bubble
         this.graphics.onPostDraw = (ctx) => {
             if (stats.score == goal) {
-                this.isOpen = true;
+                this._state.isOpen = true;
             }
-            if (this.isOpen) {
+            if (this._state.isOpen) {
                 this.graphics.use("opened");
             } else {
                 this.graphics.use("closed");
@@ -47,7 +53,7 @@ export class Gate extends ex.Actor implements iArtifact {
         }
     }
     activateArtifact(player: Player) {
-        if (this.isOpen) {
+        if (this._state.isOpen) {
             stats.nextScene = true;
         }
     }
