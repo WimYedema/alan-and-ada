@@ -17,7 +17,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - The initial version of the Alan and Ada game.
 
-
 ### Fixed
 
 -
@@ -28,7 +27,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-- 
+-
 
 <!--------------------------------- DO NOT EDIT BELOW THIS LINE --------------------------------->
 <!--------------------------------- DO NOT EDIT BELOW THIS LINE --------------------------------->

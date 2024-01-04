@@ -4,8 +4,9 @@
 > This document is shamelessly copied from Excalibur.
 
 ## Code of Conduct
-This project is released with a 
-[Contributor Code of Conduct](CODE_OF_CONDUCT.md). 
+
+This project is released with a
+[Contributor Code of Conduct](CODE_OF_CONDUCT.md).
 By participating in this project, you agree to abide by its terms.
 
 ## Questions
@@ -110,7 +111,7 @@ clarify the work you'll need to do. We're here to help!
   update CHANGELOG.md with your changes. The changelog is reserved for concise
   consumer-centric changes; all other information should be included
   appropriately as code comments, API documentation, or additional
-  documentation. The categories we use are adapted from 
+  documentation. The categories we use are adapted from
   [Keep a Changelog][keep-a-changelog]:
   - `Breaking Changes` for changes to the existing API that are not backwards
     compatible
@@ -235,12 +236,12 @@ tests). Write tests to cover any potential scenarios your code introduces.
 Here’s an example:
 
 ```javascript
-describe('a monkey', () => {
-  it('climbs trees', () => {
+describe("a monkey", () => {
+  it("climbs trees", () => {
     // put your spec here to show that monkeys climb trees
   });
-  describe('when the monkey is hungry', () => {
-    it('eats a banana', () => {
+  describe("when the monkey is hungry", () => {
+    it("eats a banana", () => {
       // put your spec here to show that this is true
     });
   });
@@ -263,13 +264,13 @@ Use `npm run visual` to start Storybook. Stories are written in the `src/stories
 ## Issue Labels
 
 - [good first issue][search-label-good first issue]: issues that are good
-      starting points for new contributors to open source
+  starting points for new contributors to open source
 - [help wanted][search-label-help wanted]: issues that are more in-depth and may
-      require a certain platform or skillset to implement
+  require a certain platform or skillset to implement
 - [bug][search-label-bug]: a problem or an unexpected behavior
 
 If you'd like to contribute, these labels are good places to start. Our
-remaining labels are documented on the 
+remaining labels are documented on the
 [Labels page](https://github.com/WimYedema/alan-and-ada/labels).
 
 [forum]: https://github.com/WimYedema/alan-and-ada/discussions
