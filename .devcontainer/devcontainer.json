@@ -1,5 +1,13 @@
 {
-    "name": "Development container",
-    "updateContentCommand": "npm install",
-    "postAttachCommand": "npm run dev"
+  "name": "Development container",
+  "updateContentCommand": "npm install",
+  "postAttachCommand": "npm run dev",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "kavod-io.vscode-jest-test-adapter"
+      ]
+    }
+  }
 }

@@ -1,13 +1,12 @@
 ---
 name: Bug Report
 about: Something not working as expected? Tell us about it!
-title: ''
-labels: ''
-assignees: ''
-
+title: ""
+labels: ""
+assignees: ""
 ---
 
-<!-- ::: IMPORTANT NOTE ::: 
+<!-- ::: IMPORTANT NOTE :::
 
 Hi, this is the Alan and Ada development team. Please take a moment to read the instructions below:
 
@@ -21,21 +20,27 @@ https://github.com/WimYedema/alan-and-ada/blob/master/.github/CONTRIBUTING.md#re
 <!-- Add relevant pictures/gifs as appropriate -->
 
 ### Steps to Reproduce
+
 <!-- Detailed steps for reproducing the problem -->
 <!-- If possible, please include a self-contained code snippet that demonstrates the problem -->
 
 ### Expected Result
+
 <!-- What you expected to happen -->
 
 ### Actual Result
+
 <!-- What happened instead -->
 
 ### Environment
+
 <!-- Please fill out these fields -->
+
 - browsers and versions: <!-- e.x. Chrome (50.0.2883.87), Firefox (50.1.0), Edge (38.14393.0.0), etc. -->
 - operating system: <!-- What OS are you using? -->
 - Alan and Ada versions: <!-- which version(s) of Alan and Ada contain the bug?-->
 - (anything else that may be relevant) <!-- Are there versions of Alan and Ada that don't contain the bug?, etc. -->
 
 ### Current Workaround
+
 <!-- If you have determined a workaround for this issue, please detail it here -->
