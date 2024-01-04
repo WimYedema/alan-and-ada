@@ -1,5 +1,5 @@
 import * as ex from 'excalibur';
-import { girl, boy, Resources, tileSize } from '../core/resources';
+import { girl, boy, Resources, tileSize, playerCharacters } from '../core/resources';
 import { Baddie } from './baddie';
 import { stats } from '../core/stats';
 import { Ground } from './ground';
@@ -8,12 +8,13 @@ import { Lift } from './lift';
 import { GameActor } from '../core/actor';
 
 export class PlayerState {
-    public onGround = true;
-    public atArtifact: iArtifact | null = null;
-    public hurt = false;
-    public hurtTime: number = 0;
-    public scaleTarget: number = 1;
-    public groundVel: ex.Vector = ex.Vector.Zero;
+    charName: string = "alan";
+    onGround: boolean = true;
+    atArtifact: iArtifact | null = null;
+    hurt = false;
+    hurtTime: number = 0;
+    scaleTarget: number = 1;
+    groundVel: ex.Vector = ex.Vector.Zero;
 }
 
 export class Player extends GameActor<PlayerState> {
@@ -47,13 +48,18 @@ export class Player extends GameActor<PlayerState> {
             collider: ex.Shape.Box(32, 50, new ex.Vector(0.5, 1))
         });
     }
-
-    preInitialize(engine: ex.Engine) {
+    onActivate(engine: ex.Engine) {
+        if (this._state.charName != stats.charName) {
+            this.reinitialize(engine);
+        }
+    }
+    initializeActor(engine: ex.Engine) {
         // Initialize actor
-        const hurt_sprite = stats.character.hurt;
-        const idle_sprite = stats.character.idle;
-        const jump_sprite = stats.character.jump;
-        const run_sprite = stats.character.run;
+        this._state.charName = stats.charName;
+        const hurt_sprite = playerCharacters[stats.charName].hurt;
+        const idle_sprite = playerCharacters[stats.charName].idle;
+        const jump_sprite = playerCharacters[stats.charName].jump;
+        const run_sprite = playerCharacters[stats.charName].run;
 
         // Setup visuals
         const scale = new ex.Vector(0.125, 0.125);
@@ -93,6 +99,10 @@ export class Player extends GameActor<PlayerState> {
         // onPostCollision is an event, not a lifecycle meaning it can be subscribed to by other things
         this.on('postcollision', (evt) => this.onPostCollision(evt));
         this.on("exitviewport", (evt) => this.onExitViewport(evt));
+    }
+    onInitialize(engine: ex.Engine): void {
+        super.onInitialize(engine);
+        this.scene.on('activate', () => this.onActivate(engine));
     }
     onExitViewport(evt: ex.ExitViewPortEvent) {
         stats.gameOver = true;

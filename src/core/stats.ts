@@ -1,8 +1,5 @@
-import { iCharacter } from "./icharacter";
-import { boy } from "./resources";
-
 class Stats {
-    public character: iCharacter = boy;
+    public charName: string = "alan";
     public health: number = 100;
     public assignment: string = "";
     public gameOver: boolean = false;

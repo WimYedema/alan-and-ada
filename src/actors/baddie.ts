@@ -26,7 +26,7 @@ export class Baddie extends SceneActor<BaddieState> {
         });
     }
 
-    preInitialize(engine: ex.Engine) {
+    initializeActor(engine: ex.Engine) {
         // Setup visuals
         const idle = ex.Animation.fromSpriteSheet(baddieSpriteSheet, [0, 1], 100);
         idle.scale = new ex.Vector(2, 2);

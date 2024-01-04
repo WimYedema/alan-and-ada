@@ -60,7 +60,7 @@ export class LevelLayout extends ex.Scene implements iSceneNode {
         background.graphics.add('poly', poly);
         background.graphics.show('poly');
         engine.add(background);
-        
+
         // For the test harness to be predicable
         if (!(window as any).__TESTING) {
             this.initCamera(this.player);
@@ -73,8 +73,5 @@ export class LevelLayout extends ex.Scene implements iSceneNode {
                 engine.add(new Wall({ x: this.levelSize.x, y: 0, down: this.levelSize.y }));
             }
         }
-    }
-    onActivate(context: ex.SceneActivationContext<undefined>): void {
-        console.log("ACTIVATE");
     }
 }

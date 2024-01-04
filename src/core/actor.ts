@@ -64,23 +64,21 @@ export abstract class ActorWithState<StateType> extends Actor {
             this.scene.add(this);
         }
     }
-    preInitialize(engine: ex.Engine) {
-        
+    initializeActor(engine: ex.Engine) {
     }
-    postInitialize(engine: ex.Engine) {
+    reinitialize(engine: ex.Engine) {
+        this.initializeActor(engine);
         this.initialState = this.state;
     }
 
     onInitialize(engine: ex.Engine) {
-        this.preInitialize(engine);
-        super.onInitialize(engine);
-        this.postInitialize(engine);
+        this.reinitialize(engine);
     }
 }
 
 export abstract class SceneActor<StateType> extends ActorWithState<StateType> {
-    postInitialize(engine: ex.Engine) {
-        super.postInitialize(engine);
+    onInitialize(engine: ex.Engine) {
+        super.onInitialize(engine);
         this.scene.on('activate', () => this.onActivate());
     }
     onActivate() {
@@ -90,8 +88,8 @@ export abstract class SceneActor<StateType> extends ActorWithState<StateType> {
 }
 
 export abstract class GameActor<StateType> extends ActorWithState<StateType> {
-    postInitialize(engine: ex.Engine) {
-        super.postInitialize(engine);
+    onInitialize(engine: ex.Engine) {
+        super.onInitialize(engine);
         engine.on('gameover', () => this.onGameover());
     }
     onGameover() {

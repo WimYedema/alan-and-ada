@@ -1,5 +1,5 @@
 import * as ex from 'excalibur';
-import { boy, girl } from '../core/resources';
+import { boy, girl, playerCharacters } from '../core/resources';
 import { stats } from '../core/stats';
 import { iCharacter } from '../core/icharacter';
 import { TextBubble } from '../core/textBubble';
@@ -7,16 +7,18 @@ import { iSceneNode } from '../core/cutScene';
 
 
 class SelectorButton extends ex.ScreenElement {
-    public character;
+    charName: string;
+    character: iCharacter;
     flip: boolean;
 
-    constructor(x: number, y: number, sprites: iCharacter, flip: boolean = false) {
+    constructor(x: number, y: number, charName: string, flip: boolean = false) {
         super({
             x: x,
             y: y,
             anchor: ex.vec(0.5, 1),
         });
-        this.character = sprites;
+        this.charName = charName;
+        this.character = playerCharacters[this.charName];
         this.flip = flip;
     }
     onInitialize() {
@@ -33,7 +35,7 @@ class SelectorButton extends ex.ScreenElement {
         this.graphics.use("idle");
 
         this.on('pointerup', () => {
-            stats.character = this.character;
+            stats.charName = this.charName;
             stats.nextScene = true;
         })
 
@@ -66,8 +68,8 @@ export class PlayerSelect extends ex.Scene implements iSceneNode {
     nextScene: string = "example";
 
     onInitialize(engine: ex.Engine) {
-        engine.add(new SelectorButton(engine.drawWidth / 2 + 120, 365, girl, true));
-        engine.add(new SelectorButton(engine.drawWidth / 2 - 120, 350, boy));
+        engine.add(new SelectorButton(engine.drawWidth / 2 + 120, 365, "ada", true));
+        engine.add(new SelectorButton(engine.drawWidth / 2 - 120, 350,  "alan"));
 
         const bubbleWidth = engine.drawWidth - 200
         const alan = { x: 10, y: engine.drawHeight - 290, right: bubbleWidth, down: 80 };
