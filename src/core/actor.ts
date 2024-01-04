@@ -90,9 +90,12 @@ export abstract class SceneActor<StateType> extends ActorWithState<StateType> {
 export abstract class GameActor<StateType> extends ActorWithState<StateType> {
     onInitialize(engine: ex.Engine) {
         super.onInitialize(engine);
-        engine.on('gameover', () => this.onGameover());
+        this.scene.on('activate', () => this.onActivate(engine));
+        engine.on('gameover', () => this.onGameover(engine));
     }
-    onGameover() {
+    onActivate(engine: ex.Engine) {
+    }
+    onGameover(engine: ex.Engine) {
         if (this.initialState === undefined) return;
         this.state = this.initialState;
     }

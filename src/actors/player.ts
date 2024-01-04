@@ -100,10 +100,6 @@ export class Player extends GameActor<PlayerState> {
         this.on('postcollision', (evt) => this.onPostCollision(evt));
         this.on("exitviewport", (evt) => this.onExitViewport(evt));
     }
-    onInitialize(engine: ex.Engine): void {
-        super.onInitialize(engine);
-        this.scene.on('activate', () => this.onActivate(engine));
-    }
     onExitViewport(evt: ex.ExitViewPortEvent) {
         stats.gameOver = true;
     }
