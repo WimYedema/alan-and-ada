@@ -39,9 +39,8 @@
   },
   "typedocOptions": {
     "skipErrorChecking": true,
-    "exclude": "**/excalibur/**",
     "entryPoints": [
-      "src/main.ts"
+      "./src/docs.ts"
     ]
   }
 }

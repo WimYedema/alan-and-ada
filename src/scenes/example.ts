@@ -7,6 +7,11 @@ import { iSceneNode } from "../core/cutScene";
 import { Potion } from "../actors/potion";
 import { Lift } from "../actors/lift";
 
+/**
+ * Dit is een voorbeeld van hoe je een klein maar leuk level kunt maken 
+ * met dingen als vloeren, muren, monsters, drankjes, en bewegende 
+ * platforms.
+ */
 export class Example extends LevelLayout implements iSceneNode {
   thisScene = "example";
   nextScene = "beforeLevel1";

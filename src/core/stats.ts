@@ -1,4 +1,4 @@
-class Stats {
+export class Stats {
   public charName: string = "alan";
   public health: number = 100;
   public assignment: string = "";
