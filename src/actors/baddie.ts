@@ -12,6 +12,9 @@ export class BaddieState {
   direction: ex.Vector = ex.vec(100, 0);
 }
 
+/**
+ * Simple monster.
+ */
 export class Baddie extends SceneActor<BaddieState> {
   protected _state = new BaddieState();
 

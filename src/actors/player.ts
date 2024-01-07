@@ -23,6 +23,9 @@ export class PlayerState {
   groundVel: ex.Vector = ex.Vector.Zero;
 }
 
+/**
+ * The actor controlled by the player.
+ */
 export class Player extends GameActor<PlayerState> {
   protected _state = new PlayerState();
 

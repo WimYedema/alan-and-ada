@@ -12,6 +12,9 @@ interface PotionArgs extends iLocation {
   potionColor: "purple" | "yellow";
 }
 
+/**
+ * A potion has an effect on the player when applied.
+ */
 export class Potion extends Artifact {
   public potionColor: string;
 

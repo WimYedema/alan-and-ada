@@ -1,5 +1,8 @@
 import { CutScene, iSceneNode } from "../core/cutScene";
 
+/**
+ * Explanation before level 1
+ */
 export class BeforeLevel1 extends CutScene implements iSceneNode {
   nextScene = "level1";
   thisScene = "beforeLevel1";
@@ -13,6 +16,9 @@ export class BeforeLevel1 extends CutScene implements iSceneNode {
   ];
 }
 
+/**
+ * Explanation before level 2
+ */
 export class BeforeLevel2 extends CutScene {
   nextScene = "level2";
   thisScene = "beforeLevel2";
@@ -25,6 +31,9 @@ export class BeforeLevel2 extends CutScene {
   ];
 }
 
+/**
+ * Explanation before level 3
+ */
 export class BeforeLevel3 extends CutScene {
   nextScene = "level3";
   thisScene = "beforeLevel3";

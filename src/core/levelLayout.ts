@@ -5,20 +5,50 @@ import { iSceneNode } from "./cutScene";
 import { iLocation } from "./location";
 import { tileSize } from "./resources";
 import { Floor, Wall } from "../actors/ground";
-import { SceneActor } from "./actor";
 
-export class LevelLayout extends ex.Scene implements iSceneNode {
-  thisScene: string = "";
-  nextScene: string = "";
-  levelSize?: ex.Vector;
+/**
+ * The LevelLayout is the foundation for all *playable* levels. It set the
+ * general screen layout, configures the camera, and provides some convenience
+ * functions for level construction.
+ *
+ * The sub-classes only need to implement {@link layoutLevel} to create the actors
+ * and artifacts of the level.
+ * 
+ * @noInheritDoc
+ */
+export abstract class LevelLayout extends ex.Scene implements iSceneNode {
+  abstract thisScene: string;
+  abstract nextScene: string;
+  protected levelSize?: ex.Vector;
 
-  playerStart: ex.Vector = ex.vec(2, 2);
-  player?: Player;
+  protected playerStart: ex.Vector = ex.vec(2, 2);
+  protected player?: Player;
 
-  layoutLevel(engine: ex.Engine) {}
+  /**
+   * Populate the level with actors, creating the walls, floors, monsters,
+   * etc. The level should at least position the player, an exit gate, and
+   * probably something for the player to stand on.
+   *
+   * @param engine The excalibur engine.
+   */
+  abstract layoutLevel(engine: ex.Engine): void;
+
+  /**
+   * Set the start location of the player.
+   *
+   * @param args The location where the player will start.
+   */
   playerStartsAt(args: iLocation) {
     this.playerStart = ex.vec(args.x, args.y);
   }
+  /**
+   * @experimental
+   * 
+   * Initialize the camera for this level. Defaults to an elastic focus on the 
+   * player.
+   * 
+   * @param player The player actor
+   */
   initCamera(player: ex.Actor) {
     this.camera.clearAllStrategies();
     this.camera.strategy.elasticToActor(player, 0.05, 0.1);
@@ -75,8 +105,8 @@ export class LevelLayout extends ex.Scene implements iSceneNode {
             0,
             0,
             this.levelSize.x * tileSize,
-            this.levelSize.y * tileSize,
-          ),
+            this.levelSize.y * tileSize
+          )
         );
         engine.add(new Floor({ x: -1, y: -1, right: this.levelSize.x + 2 }));
         engine.add(
@@ -84,11 +114,11 @@ export class LevelLayout extends ex.Scene implements iSceneNode {
             x: -1,
             y: this.levelSize.y,
             right: this.levelSize.x + 2,
-          }),
+          })
         );
         engine.add(new Wall({ x: -1, y: 0, down: this.levelSize.y }));
         engine.add(
-          new Wall({ x: this.levelSize.x, y: 0, down: this.levelSize.y }),
+          new Wall({ x: this.levelSize.x, y: 0, down: this.levelSize.y })
         );
       }
     }

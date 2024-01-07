@@ -6,6 +6,10 @@ export interface LiftArgs {
   startPos: iLocation;
   endPos: iLocation;
 }
+
+/**
+ * A Lift is a platform that moves around, not just up and down.
+ */
 export class Lift extends ex.Actor implements LiftArgs {
   startPos: iLocation;
   endPos: iLocation;

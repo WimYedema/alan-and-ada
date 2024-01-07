@@ -19,6 +19,9 @@ export class GateState {
   goal: number = 0;
 }
 
+/**
+ * With a Gate the player can move to another Scene
+ */
 export class Gate extends GameActor<GateState> implements iArtifact {
   protected _state = new GateState();
   goal: number = 0;

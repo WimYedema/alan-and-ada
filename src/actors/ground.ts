@@ -2,6 +2,9 @@ import * as ex from "excalibur";
 import { grassFlatSprite, grassBelowSprite, tileSize } from "../core/resources";
 import { iBox, iFloor, iWall } from "../core/location";
 
+/**
+ * Floor and Walls
+ */
 export class Ground extends ex.Actor {
   constructor(args: iBox) {
     const scale = (args.scale !== undefined ? args.scale : 1) * tileSize;

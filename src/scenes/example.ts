@@ -8,9 +8,8 @@ import { Potion } from "../actors/potion";
 import { Lift } from "../actors/lift";
 
 /**
- * Dit is een voorbeeld van hoe je een klein maar leuk level kunt maken 
- * met dingen als vloeren, muren, monsters, drankjes, en bewegende 
- * platforms.
+ * This is an example of how you can make a small but fun level, with things
+ * like floors, walls, monsters, potions, and moving platforms.
  */
 export class Example extends LevelLayout implements iSceneNode {
   thisScene = "example";
