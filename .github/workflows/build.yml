@@ -41,7 +41,7 @@ jobs:
 
       - name: Build documentation
         run: |
-          typedoc
+          npm run typedoc
 
       - name: Collect deployment
         run: |
