@@ -5,8 +5,19 @@ import { playerCharacters } from "./resources";
 import { SceneActor } from "./actor";
 import { iLocation } from "./location";
 
+/**
+ * A SceneNode provides the links between scenes.
+ */
 export interface iSceneNode {
+  /**
+   * The (unique) name of this scene.
+   */
   thisScene: string;
+
+  /**
+   * The name of the next scene, the scene the player will go to after passing 
+   * the exit gate.
+   */
   nextScene: string;
 }
 
