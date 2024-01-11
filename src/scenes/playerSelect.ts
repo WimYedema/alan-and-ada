@@ -72,7 +72,7 @@ function sequence(scene: ex.Scene, actors: ex.Actor[]): void {
 
 export class PlayerSelect extends ex.Scene implements iSceneNode {
   thisScene: string = "playerSelect";
-  nextScene: string = "example";
+  nextScene: string = "level1";
 
   onInitialize(engine: ex.Engine) {
     engine.add(
