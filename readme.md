@@ -24,6 +24,7 @@ The following key combo's can be used to help development:
 | ---------- | -------------------------------------------------- |
 | **Escape** | Enter debug-mode: visualize bounding boxes and ids |
 | **N**      | Only in debug-mode: finish the current level       |
+| **R**      | Only in debug-mode: restart the game               |
 
 # Credits
 
