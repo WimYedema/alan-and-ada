@@ -54,7 +54,6 @@ addNode(new Finish());
 addNode(new GameOver());
 
 const st = JSON.parse(window.localStorage.getItem("stats")||"{}");
-console.log(st);
 stats.load(st);
 engine.goToScene(stats.currentNode);
 let showDebug = false;

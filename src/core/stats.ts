@@ -7,13 +7,13 @@ export class Stats {
   public currentNode: string = "playerSelect";
   public score: number = 0;
   load(d: any) {
-    this.charName = d["charName"];
-    this.health = d["health"];
-    this.assignment = d["assignment"];
-    this.gameOver = d["gameOver"];
-    this.nextScene = d["nextScene"];
-    this.currentNode = d["currentNode"];
-    this.score = d["score"];
+    this.charName = d["charName"] ?? this.charName;
+    this.health = d["health"] ?? this.health;
+    this.assignment = d["assignment"] ?? this.assignment;
+    this.gameOver = d["gameOver"] ?? this.gameOver;
+    this.nextScene = d["nextScene"] ?? this.nextScene;
+    this.currentNode = d["currentNode"] ?? this.currentNode;
+    this.score = d["score"] ?? this.score;
   }
   public reset() {
     this.health = 100;
