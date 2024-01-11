@@ -53,7 +53,9 @@ addNode(new Level3());
 addNode(new Finish());
 addNode(new GameOver());
 
-stats.currentNode = "playerSelect";
+const st = JSON.parse(window.localStorage.getItem("stats")||"{}");
+console.log(st);
+stats.load(st);
 engine.goToScene(stats.currentNode);
 let showDebug = false;
 
@@ -62,18 +64,23 @@ engine.on("preupdate", () => {
   if (engine.input.keyboard.wasPressed(ex.Input.Keys.Escape)) {
     showDebug = !showDebug;
     engine.showDebug(showDebug);
-  } else if (
-    showDebug &&
-    engine.input.keyboard.wasPressed(ex.Input.Keys.KeyN)
-  ) {
-    stats.nextScene = true;
+  } else if (showDebug) {
+    if(engine.input.keyboard.wasPressed(ex.Input.Keys.KeyN)) {
+      stats.nextScene = true;
+    } else if(engine.input.keyboard.wasPressed(ex.Input.Keys.KeyR)) {
+      stats.currentNode = "playerSelect";
+      engine.goToScene(nodes[stats.currentNode].thisScene);
+      window.localStorage.setItem("stats", JSON.stringify(stats));
+    }
   }
+    
   if (stats.nextScene) {
     console.log("switching from ", stats.currentNode);
     stats.currentNode = nodes[stats.currentNode].nextScene;
     stats.nextScene = false;
     console.log("switching to ", stats.currentNode);
     engine.goToScene(nodes[stats.currentNode].thisScene);
+    window.localStorage.setItem("stats", JSON.stringify(stats));
   } else if (stats.gameOver) {
     stats.currentNode = "gameover";
     engine.goToScene("gameover");

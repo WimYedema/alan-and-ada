@@ -6,6 +6,15 @@ export class Stats {
   public nextScene: boolean = false;
   public currentNode: string = "playerSelect";
   public score: number = 0;
+  load(d: any) {
+    this.charName = d["charName"];
+    this.health = d["health"];
+    this.assignment = d["assignment"];
+    this.gameOver = d["gameOver"];
+    this.nextScene = d["nextScene"];
+    this.currentNode = d["currentNode"];
+    this.score = d["score"];
+  }
   public reset() {
     this.health = 100;
     this.gameOver = false;
