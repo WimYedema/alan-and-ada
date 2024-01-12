@@ -89,21 +89,20 @@ engine.on("gameover", () => {
   console.log("Game over reset");
   stats.reset();
 });
-// Detect hidden and visible outside of excalibur: it blocks events when the
-// engine is stopped so we cannot detect when to resume.
-document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "hidden") {
-    console.log("Window hidden");
-    engine.stop();
-  } else if (document.visibilityState === "visible") {
-    console.log("Window visible");
-    engine.start();
-  }
-});
-
 // Start the engine
 engine.start(loader).then(() => {
   console.log("game start");
+  // Detect hidden and visible outside of excalibur: it blocks events when the
+  // engine is stopped so we cannot detect when to resume.
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") {
+      console.log("Window hidden");
+      engine.stop();
+    } else if (document.visibilityState === "visible") {
+      console.log("Window visible");
+      engine.start();
+    }
+  });
 });
 
 // For test hook
