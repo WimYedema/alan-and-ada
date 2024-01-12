@@ -7,7 +7,15 @@
       "extensions": [
         "esbenp.prettier-vscode",
         "kavod-io.vscode-jest-test-adapter"
-      ]
+      ],
+      "settings": {
+        "window.menuBarVisibility": "classic",
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "editor.formatOnPaste": true,
+        "typescript.surveys.enabled": false      
+      }
     }
   }
 }
