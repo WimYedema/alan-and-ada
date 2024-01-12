@@ -37,6 +37,7 @@ jobs:
 
       - name: Test
         run: |
+          npx prettier --check src
           npm run jest
 
       - name: Build documentation
