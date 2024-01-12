@@ -13,7 +13,7 @@ import { Floor, Wall } from "../actors/ground";
  *
  * The sub-classes only need to implement {@link layoutLevel} to create the actors
  * and artifacts of the level.
- * 
+ *
  * @noInheritDoc
  */
 export abstract class LevelLayout extends ex.Scene implements iSceneNode {
@@ -43,10 +43,10 @@ export abstract class LevelLayout extends ex.Scene implements iSceneNode {
   }
   /**
    * @experimental
-   * 
-   * Initialize the camera for this level. Defaults to an elastic focus on the 
+   *
+   * Initialize the camera for this level. Defaults to an elastic focus on the
    * player.
-   * 
+   *
    * @param player The player actor
    */
   initCamera(player: ex.Actor) {
@@ -105,8 +105,8 @@ export abstract class LevelLayout extends ex.Scene implements iSceneNode {
             0,
             0,
             this.levelSize.x * tileSize,
-            this.levelSize.y * tileSize
-          )
+            this.levelSize.y * tileSize,
+          ),
         );
         engine.add(new Floor({ x: -1, y: -1, right: this.levelSize.x + 2 }));
         engine.add(
@@ -114,11 +114,11 @@ export abstract class LevelLayout extends ex.Scene implements iSceneNode {
             x: -1,
             y: this.levelSize.y,
             right: this.levelSize.x + 2,
-          })
+          }),
         );
         engine.add(new Wall({ x: -1, y: 0, down: this.levelSize.y }));
         engine.add(
-          new Wall({ x: this.levelSize.x, y: 0, down: this.levelSize.y })
+          new Wall({ x: this.levelSize.x, y: 0, down: this.levelSize.y }),
         );
       }
     }

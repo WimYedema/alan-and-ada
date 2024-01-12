@@ -15,7 +15,7 @@ export interface iSceneNode {
   thisScene: string;
 
   /**
-   * The name of the next scene, the scene the player will go to after passing 
+   * The name of the next scene, the scene the player will go to after passing
    * the exit gate.
    */
   nextScene: string;

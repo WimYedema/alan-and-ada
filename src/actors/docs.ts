@@ -1,1 +1,1 @@
-export { Player, PlayerState} from "./player";
+export { Player, PlayerState } from "./player";
