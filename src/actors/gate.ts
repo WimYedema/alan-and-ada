@@ -3,6 +3,7 @@ import {
   gateOpenSpriteSheet,
   gateClosedSpriteSheet,
   tileSize,
+  gridSpace,
 } from "../core/resources";
 import { Player } from "./player";
 import { stats } from "../core/stats";
@@ -28,7 +29,7 @@ export class Gate extends GameActor<GateState> implements iArtifact {
   constructor(args: GateArgs) {
     super({
       name: "Gate",
-      pos: new ex.Vector(args.x * tileSize, args.y * tileSize),
+      pos: gridSpace(args),
       scale: new ex.Vector(0.5, 0.5),
       anchor: ex.Vector.Down,
       collider: ex.Shape.Box(

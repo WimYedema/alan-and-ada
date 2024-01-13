@@ -1,5 +1,10 @@
 import * as ex from "excalibur";
-import { grassFlatSprite, grassBelowSprite, tileSize } from "../core/resources";
+import {
+  grassFlatSprite,
+  grassBelowSprite,
+  tileSize,
+  gridSpace,
+} from "../core/resources";
 import { iBox, iFloor, iWall } from "../core/location";
 
 /**
@@ -7,27 +12,27 @@ import { iBox, iFloor, iWall } from "../core/location";
  */
 export class Ground extends ex.Actor {
   constructor(args: iBox) {
-    const scale = (args.scale !== undefined ? args.scale : 1) * tileSize;
+    const scale = args.scale !== undefined ? args.scale : 1;
     super({
       name: "Ground",
-      pos: new ex.Vector(args.x * scale, args.y * scale),
+      pos: gridSpace(args),
       scale: new ex.Vector(
-        scale / grassFlatSprite.width,
-        scale / grassFlatSprite.width,
+        (scale * tileSize) / grassFlatSprite.width,
+        (scale * tileSize) / grassFlatSprite.width,
       ),
       anchor: ex.Vector.Zero,
       collider: ex.Shape.Box(
-        4 * tileSize * args.right,
-        4 * tileSize * args.down,
+        (4 * tileSize * args.right) / scale,
+        (4 * tileSize * args.down) / scale,
         ex.Vector.Zero,
       ),
       collisionType: ex.CollisionType.Fixed,
       collisionGroup: ex.CollisionGroupManager.groupByName("floor"),
     });
 
-    for (let i = 0; i < args.right; i++) {
+    for (let i = 0; i < args.right / scale; i++) {
       let sprite = grassFlatSprite;
-      for (let j = 0; j < args.down; j++) {
+      for (let j = 0; j < args.down / scale; j++) {
         this.graphics.show(sprite, {
           anchor: ex.Vector.Zero,
           offset: ex.vec(i * sprite.width, j * sprite.height),

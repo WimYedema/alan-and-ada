@@ -2,7 +2,7 @@ import * as ex from "excalibur";
 import { Actor } from "./actor";
 import { iArtifact } from "./iartifact";
 import { iLocation } from "./location";
-import { tileSize } from "./resources";
+import { gridSpace, tileSize } from "./resources";
 import { Player } from "../actors/player";
 
 export interface ArtifactArgs extends iLocation {
@@ -13,7 +13,7 @@ export class Artifact extends Actor implements iArtifact {
   constructor(args: ArtifactArgs) {
     super({
       name: args.name,
-      pos: new ex.Vector(args.x * tileSize, args.y * tileSize),
+      pos: gridSpace(args),
       scale: new ex.Vector(0.5, 0.5),
       anchor: ex.Vector.Down,
       collider: ex.Shape.Box(tileSize, tileSize, ex.vec(0, 1)),
