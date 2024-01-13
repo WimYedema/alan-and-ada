@@ -19,7 +19,7 @@ export class Level2 extends LevelLayout implements iSceneNode {
       new Floor({
         x: 3,
         y: 0,
-        right: 5,
+        right: 1,
       }),
     );
     // LET OP: Na de aanpassing moet je het spel herladen!
