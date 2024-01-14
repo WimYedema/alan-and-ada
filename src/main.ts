@@ -68,6 +68,7 @@ engine.on("preupdate", () => {
       stats.nextScene = true;
     } else if (engine.input.keyboard.wasPressed(ex.Input.Keys.KeyR)) {
       stats.currentNode = "playerSelect";
+      stats.reset();
       engine.goToScene(nodes[stats.currentNode].thisScene);
       window.localStorage.setItem("stats", JSON.stringify(stats));
     }

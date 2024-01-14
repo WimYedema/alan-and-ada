@@ -118,9 +118,9 @@ export abstract class LevelLayout extends ex.Scene implements iSceneNode {
             right: this.levelSize.x + 2,
           }),
         );
-        engine.add(new Wall({ x: -1, y: 0, down: this.levelSize.y + 1 }));
+        engine.add(new Wall({ x: -1, y: 0, up: this.levelSize.y + 1 }));
         engine.add(
-          new Wall({ x: this.levelSize.x, y: 0, down: this.levelSize.y + 1 }),
+          new Wall({ x: this.levelSize.x, y: 0, up: this.levelSize.y + 1 }),
         );
       }
     }

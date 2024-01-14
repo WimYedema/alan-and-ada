@@ -42,6 +42,6 @@ export class Example extends LevelLayout implements iSceneNode {
     engine.add(new Floor({ x: 13, y: 11, right: 4 }));
     engine.add(new Gate({ x: 14, y: 11, goal: 2 }));
     engine.add(new Floor({ x: 16, y: 6, right: 1 }));
-    engine.add(new Wall({ x: 17, y: 22, down: 20 }));
+    engine.add(new Wall({ x: 17, y: 3, up: 20 }));
   }
 }

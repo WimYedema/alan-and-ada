@@ -10,7 +10,7 @@ export class Level2 extends LevelLayout implements iSceneNode {
 
   layoutLevel(engine: ex.Engine) {
     this.playerStartsAt({ x: 2, y: 3 });
-    engine.add(new Wall({ x: 0, y: 7, down: 6 }));
+    engine.add(new Wall({ x: 0, y: 2, up: 6 }));
     engine.add(new Floor({ x: 1, y: 2, right: 2 }));
 
     // ---
@@ -27,6 +27,6 @@ export class Level2 extends LevelLayout implements iSceneNode {
 
     engine.add(new Floor({ x: 11, y: 2, right: 2 }));
     engine.add(new Gate({ x: 11, y: 2, goal: 0 }));
-    engine.add(new Wall({ x: 13, y: 7, down: 6 }));
+    engine.add(new Wall({ x: 13, y: 2, up: 6 }));
   }
 }
