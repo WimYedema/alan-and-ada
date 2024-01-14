@@ -51,6 +51,6 @@ export class Floor extends Ground {
 
 export class Wall extends Ground {
   constructor(args: iWall) {
-    super({ x: args.x, y: args.y + args.up-1, right: 1, down: args.up });
+    super({ x: args.x, y: args.y + args.up - 1, right: 1, down: args.up });
   }
 }
