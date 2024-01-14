@@ -17,7 +17,7 @@ export class Example extends LevelLayout implements iSceneNode {
   levelSize = new ex.Vector(22, 22);
 
   layoutLevel(engine: ex.Engine) {
-    engine.add(new Floor({ x: 0, y: 22-19, right: 17 }));
+    engine.add(new Floor({ x: 0, y: 22 - 19, right: 17 }));
 
     engine.add(new Floor({ x: 1, y: 22 - 17, right: 3 }));
     engine.add(new Floor({ x: 2, y: 22 - 15, right: 2 }));

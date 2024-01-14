@@ -1,5 +1,10 @@
 import * as ex from "excalibur";
-import { baddieSpriteSheet, gridSpace, Resources, tileSize } from "../core/resources";
+import {
+  baddieSpriteSheet,
+  gridSpace,
+  Resources,
+  tileSize,
+} from "../core/resources";
 import { Player } from "./player";
 import { stats } from "../core/stats";
 import { Ground } from "./ground";

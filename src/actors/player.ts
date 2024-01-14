@@ -51,7 +51,7 @@ export class Player extends GameActor<PlayerState> {
   constructor(x: number, y: number) {
     super({
       name: "Player",
-      pos: gridSpace({x:x, y:y}),
+      pos: gridSpace({ x: x, y: y }),
       anchor: new ex.Vector(0.5, 1),
       collisionType: ex.CollisionType.Active,
       collisionGroup: ex.CollisionGroupManager.groupByName("player"),
