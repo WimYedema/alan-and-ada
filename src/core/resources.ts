@@ -1,5 +1,6 @@
 import * as ex from "excalibur";
 import { iCharacter } from "./icharacter";
+import { iLocation } from "./location";
 
 const botFile = require("../../res/excalibot.png");
 const girlIdleFile = require("../../res/girl-idle.png");
@@ -63,7 +64,7 @@ const girl: iCharacter = {
       columns: 10,
       rows: 1,
       spriteWidth: 641,
-      spriteHeight: 542,
+      spriteHeight: 510,
     },
   }),
   run: ex.SpriteSheet.fromImageSource({
@@ -72,7 +73,7 @@ const girl: iCharacter = {
       columns: 8,
       rows: 1,
       spriteWidth: 641,
-      spriteHeight: 542,
+      spriteHeight: 510,
     },
   }),
   hurt: ex.SpriteSheet.fromImageSource({
@@ -81,7 +82,7 @@ const girl: iCharacter = {
       columns: 1,
       rows: 1,
       spriteWidth: 641,
-      spriteHeight: 542,
+      spriteHeight: 510,
     },
   }),
   jump: ex.SpriteSheet.fromImageSource({
@@ -90,7 +91,7 @@ const girl: iCharacter = {
       columns: 10,
       rows: 1,
       spriteWidth: 641,
-      spriteHeight: 542,
+      spriteHeight: 510,
     },
   }),
 };
@@ -182,6 +183,7 @@ const gateOpenSpriteSheet = ex.SpriteSheet.fromImageSource({
     spriteHeight: 227,
   },
 });
+
 const potionPurpleSprite = Resources.potionPurple.toSprite();
 const potionYellowSprite = Resources.potionYellow.toSprite();
 const blockSprite = Resources.block.toSprite();
@@ -190,8 +192,14 @@ const grassBelowSprite = Resources.grassBelow.toSprite();
 const sandHalfSprite = Resources.sandHalf.toSprite();
 const npcSprite = Resources.npc.toSprite();
 
+sandHalfSprite.scale = ex.vec(0.25, 0.25);
+
 for (const res in Resources) {
   loader.addResource((Resources as any)[res]);
+}
+
+export function gridSpace(loc: iLocation): ex.Vector {
+  return ex.vec(loc.x, -loc.y).scale(tileSize);
 }
 
 export {

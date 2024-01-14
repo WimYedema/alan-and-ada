@@ -1,5 +1,10 @@
 import * as ex from "excalibur";
-import { baddieSpriteSheet, Resources, tileSize } from "../core/resources";
+import {
+  baddieSpriteSheet,
+  gridSpace,
+  Resources,
+  tileSize,
+} from "../core/resources";
 import { Player } from "./player";
 import { stats } from "../core/stats";
 import { Ground } from "./ground";
@@ -21,7 +26,7 @@ export class Baddie extends SceneActor<BaddieState> {
   constructor(args: iLocation) {
     super({
       name: "Baddie",
-      pos: new ex.Vector(args.x * tileSize, args.y * tileSize),
+      pos: gridSpace(args),
       anchor: new ex.Vector(0.5, 1),
       collisionGroup: ex.CollisionGroupManager.groupByName("enemy"),
       collisionType: ex.CollisionType.Active,

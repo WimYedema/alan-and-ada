@@ -1,5 +1,5 @@
 import * as ex from "excalibur";
-import { girl, npcSprite, tileSize } from "../core/resources";
+import { girl, gridSpace, npcSprite, tileSize } from "../core/resources";
 import { Player } from "./player";
 import { iLocation } from "../core/location";
 
@@ -10,7 +10,7 @@ export class NPC extends ex.Actor {
   public hurtTime: number = 0;
   constructor(args: iLocation) {
     super({
-      pos: new ex.Vector(args.x * tileSize, args.y * tileSize + 3),
+      pos: gridSpace(args),
       anchor: new ex.Vector(0.5, 1),
       collisionType: ex.CollisionType.Passive,
       collisionGroup: ex.CollisionGroupManager.groupByName("enemy"),

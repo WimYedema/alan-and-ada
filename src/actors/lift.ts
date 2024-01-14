@@ -1,5 +1,5 @@
 import * as ex from "excalibur";
-import { sandHalfSprite, tileSize } from "../core/resources";
+import { gridSpace, sandHalfSprite, tileSize } from "../core/resources";
 import { iLocation } from "../core/location";
 
 export interface LiftArgs {
@@ -16,15 +16,11 @@ export class Lift extends ex.Actor implements LiftArgs {
 
   constructor(args: LiftArgs) {
     super({
-      pos: new ex.Vector(
-        args.startPos.x * tileSize,
-        args.startPos.y * tileSize + 3,
-      ),
-      scale: new ex.Vector(0.25, 0.25),
+      pos: gridSpace(args.startPos),
       anchor: ex.Vector.Down,
       collisionType: ex.CollisionType.Fixed,
       collisionGroup: ex.CollisionGroupManager.groupByName("floor"),
-      collider: ex.Shape.Box(tileSize * 4, tileSize * 2, ex.Vector.Down),
+      collider: ex.Shape.Box(tileSize, tileSize / 2, ex.Vector.Down),
     });
     this.startPos = args.startPos;
     this.endPos = args.endPos;
@@ -37,8 +33,8 @@ export class Lift extends ex.Actor implements LiftArgs {
     if (!(window as any).__TESTING) {
       this.actions.repeatForever((ctx) =>
         ctx
-          .moveTo(this.endPos.x * tileSize, this.endPos.y * tileSize, 100)
-          .moveTo(this.startPos.x * tileSize, this.startPos.y * tileSize, 100),
+          .moveTo(gridSpace(this.endPos), 100)
+          .moveTo(gridSpace(this.startPos), 100),
       );
     }
   }

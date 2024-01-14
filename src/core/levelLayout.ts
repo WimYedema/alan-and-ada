@@ -95,6 +95,8 @@ export abstract class LevelLayout extends ex.Scene implements iSceneNode {
     background.graphics.show("poly");
     engine.add(background);
 
+    this.camera.pos = this.player.pos.clone();
+
     // For the test harness to be predicable
     if (!(window as any).__TESTING) {
       this.initCamera(this.player);
@@ -103,22 +105,22 @@ export abstract class LevelLayout extends ex.Scene implements iSceneNode {
         this.camera.strategy.limitCameraBounds(
           new ex.BoundingBox(
             0,
-            0,
+            -this.levelSize.y * tileSize,
             this.levelSize.x * tileSize,
-            this.levelSize.y * tileSize,
+            0,
           ),
         );
-        engine.add(new Floor({ x: -1, y: -1, right: this.levelSize.x + 2 }));
+        engine.add(new Floor({ x: -1, y: 0, right: this.levelSize.x + 2 }));
         engine.add(
           new Floor({
             x: -1,
-            y: this.levelSize.y,
+            y: this.levelSize.y + 1,
             right: this.levelSize.x + 2,
           }),
         );
-        engine.add(new Wall({ x: -1, y: 0, down: this.levelSize.y }));
+        engine.add(new Wall({ x: -1, y: 0, up: this.levelSize.y + 1 }));
         engine.add(
-          new Wall({ x: this.levelSize.x, y: 0, down: this.levelSize.y }),
+          new Wall({ x: this.levelSize.x, y: 0, up: this.levelSize.y + 1 }),
         );
       }
     }

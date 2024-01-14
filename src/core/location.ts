@@ -4,7 +4,7 @@ export interface iLocation {
   scale?: number;
 }
 export interface iWall extends iLocation {
-  down: number;
+  up: number;
 }
 export interface iFloor extends iLocation {
   right: number;

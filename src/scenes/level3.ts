@@ -15,8 +15,8 @@ export class Level3 extends LevelLayout implements iSceneNode {
   levelSize = new ex.Vector(22, 22);
 
   layoutLevel(engine: ex.Engine) {
-    this.playerStartsAt({ x: 2, y: 22 });
-    engine.add(new Gate({ x: 20, y: 22, goal: 0 }));
+    this.playerStartsAt({ x: 2, y: 0 });
+    engine.add(new Gate({ x: 20, y: 0, goal: 0 }));
 
     // -----
     // Hier zijn een paar voorbeelden van dingen die je aan je level kan toevoegen.

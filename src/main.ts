@@ -43,13 +43,13 @@ function addNode(node: iSceneNode & ex.Scene) {
 const playerSelect = new PlayerSelect();
 addNode(playerSelect);
 
-addNode(new Example());
 addNode(new BeforeLevel1());
 addNode(new Level1());
 addNode(new BeforeLevel2());
 addNode(new Level2());
 addNode(new BeforeLevel3());
 addNode(new Level3());
+addNode(new Example());
 addNode(new Finish());
 addNode(new GameOver());
 
@@ -68,6 +68,7 @@ engine.on("preupdate", () => {
       stats.nextScene = true;
     } else if (engine.input.keyboard.wasPressed(ex.Input.Keys.KeyR)) {
       stats.currentNode = "playerSelect";
+      stats.reset();
       engine.goToScene(nodes[stats.currentNode].thisScene);
       window.localStorage.setItem("stats", JSON.stringify(stats));
     }
