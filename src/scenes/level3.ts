@@ -21,12 +21,12 @@ export class Level3 extends LevelLayout implements iSceneNode {
     // -----
     // Hier zijn een paar voorbeelden van dingen die je aan je level kan toevoegen.
     //
-    // engine.add(new Floor({ x: 2, y: 19, right: 2 }));
-    // engine.add(new Wall({ x: 5, y: 17, down: 5 }));
-    // engine.add(new Potion({ x: 7, y: 22, potionColor: "purple" }));
-    // engine.add(new Potion({ x: 9, y: 22, potionColor: "yellow" }));
-    // engine.add(new Ground({ x: 8, y: 17, down: 3, right: 2 }));
-    // engine.add(new Lift({ startPos: { x: 11, y: 21 }, endPos: { x: 11, y: 17 } }));
-    // engine.add(new Baddie({ x: 21, y: 22 }));
+    // engine.add(new Floor({ x: 2, y: 3, right: 2 }));
+    // engine.add(new Wall({ x: 5, y: 5, up: 5 }));
+    // engine.add(new Potion({ x: 7, y: 0, potionColor: "purple" }));
+    // engine.add(new Potion({ x: 9, y: 0, potionColor: "yellow" }));
+    // engine.add(new Ground({ x: 8, y: 5, down: 3, right: 2 }));
+    // engine.add(new Lift({ startPos: { x: 11, y: 1 }, endPos: { x: 11, y: 5 } }));
+    // engine.add(new Baddie({ x: 21, y: 0 }));
   }
 }
