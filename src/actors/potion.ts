@@ -68,9 +68,12 @@ export class Potion extends Artifact {
         this.potionColor == "purple" ? ex.Color.Magenta : ex.Color.Yellow,
       endColor: ex.Color.Transparent,
     });
-    this.scene.add(emitter);
-    this.killAfter(1.5, 10, () => {
-      this.scene.remove(emitter);
-    });
+    if (
+      this.killAfter(1.5, 10, () => {
+        this.scene.remove(emitter);
+      })
+    ) {
+      this.scene.add(emitter);
+    }
   }
 }
