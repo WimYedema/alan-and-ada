@@ -137,10 +137,7 @@ export class Player extends GameActor<PlayerState> {
   onPostCollision(evt: ex.PostCollisionEvent) {
     // Bot has collided with it's Top of another collider
     this._state.groundVel = ex.Vector.Zero;
-    if (evt.side === ex.Side.Bottom && evt.other instanceof Ground) {
-      this._state.onGround = true;
-    } else if (evt.side === ex.Side.Bottom && evt.other instanceof Lift) {
-      this._state.onGround = true;
+    if (evt.side === ex.Side.Bottom && evt.other instanceof Lift) {
       this._state.groundVel = evt.other.vel;
     }
 
@@ -163,7 +160,6 @@ export class Player extends GameActor<PlayerState> {
       this._state.hurt = true;
       this._state.hurtTime = 1000;
       this.vel.y = -200;
-      this._state.onGround = false;
       Resources.hit.play(0.1);
       if (stats.health == 0) {
         // Remove ability to collide. This will result in gameover when the player leaves the camera
@@ -214,7 +210,6 @@ export class Player extends GameActor<PlayerState> {
         this._state.onGround
       ) {
         this.vel.y = -tileSize * 20 * Math.sqrt(this._state.scaleTarget / 3);
-        this._state.onGround = false;
         this.graphics.use("jumpleft");
         Resources.jump.play(0.1);
       }
@@ -223,7 +218,8 @@ export class Player extends GameActor<PlayerState> {
     // Change animation based on velocity
     if (!this._state.hurt) {
       let relvel = this.vel.sub(this._state.groundVel);
-      if (this._state.onGround) {
+      if (relvel.y == 0) {
+        this._state.onGround = true;
         if (relvel.x === 0) {
           this.graphics.use("idle");
         } else if (relvel.x < 0) {
@@ -232,6 +228,7 @@ export class Player extends GameActor<PlayerState> {
           this.graphics.use("right");
         }
       } else {
+        this._state.onGround = false;
         if (relvel.x < 0) {
           this.graphics.use("jumpleft");
         } else {
