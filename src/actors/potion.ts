@@ -9,23 +9,23 @@ import { iLocation } from "../core/location";
 import { Artifact } from "../core/artifact";
 
 interface PotionArgs extends iLocation {
-  potionColor: "purple" | "yellow";
+  potionType: "shrink" | "grow";
 }
 
 /**
  * A potion has an effect on the player when applied.
  */
 export class Potion extends Artifact {
-  public potionColor: string;
+  public potionType: string;
 
   constructor(args: PotionArgs) {
     super({ name: "Potion", ...args });
-    this.potionColor = args.potionColor;
-    switch (this.potionColor) {
-      case "purple":
+    this.potionType = args.potionType;
+    switch (this.potionType) {
+      case "shrink":
         this.graphics.show(potionPurpleSprite);
         break;
-      case "yellow":
+      case "grow":
         this.graphics.show(potionYellowSprite);
         break;
       default:
@@ -33,12 +33,12 @@ export class Potion extends Artifact {
     }
   }
   activateArtifact(player: Player) {
-    switch (this.potionColor) {
-      case "purple":
+    switch (this.potionType) {
+      case "shrink":
         this.scene.camera.zoomOverTime(2, 2000);
         player.scaleTarget = 0.5;
         break;
-      case "yellow":
+      case "grow":
         this.scene.camera.zoomOverTime(1, 2000);
         player.scaleTarget = 1;
         break;
@@ -65,7 +65,7 @@ export class Potion extends Artifact {
       endSize: 0,
       acceleration: new ex.Vector(-13, -33),
       beginColor:
-        this.potionColor == "purple" ? ex.Color.Magenta : ex.Color.Yellow,
+        this.potionType == "shrink" ? ex.Color.Magenta : ex.Color.Yellow,
       endColor: ex.Color.Transparent,
     });
     if (

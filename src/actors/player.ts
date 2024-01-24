@@ -156,23 +156,22 @@ export class Player extends GameActor<PlayerState> {
         } else {
           this.graphics.use("hurtright");
         }
+        stats.health -= 1;
         if (evt.side === ex.Side.Left) this.vel.x = 100;
         else this.vel.x = -100;
       }
-      stats.health -= 1;
       this._state.hurt = true;
       this._state.hurtTime = 1000;
       this.vel.y = -200;
       this._state.onGround = false;
       Resources.hit.play(0.1);
       if (stats.health == 0) {
-        // Remove ability to collide
+        // Remove ability to collide. This will result in gameover when the player leaves the camera
         this.body.collisionType = ex.CollisionType.PreventCollision;
 
         // Launch into air with rotation
         this.acc = ex.Physics.acc;
         this.angularVelocity = 2;
-        stats.gameOver = true;
       }
     }
   }
