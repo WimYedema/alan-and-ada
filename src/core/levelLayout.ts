@@ -63,7 +63,12 @@ export abstract class LevelLayout extends ex.Scene implements iSceneNode {
 
     const scoreLabel = new ex.Label({
       text:
-        "H" + stats.health + " S" + stats.score + " Opdracht: " + assignment,
+        "♥".repeat(stats.health) +
+        "♡".repeat(5 - stats.health) +
+        " S" +
+        stats.score +
+        " Opdracht: " +
+        assignment,
       pos: ex.vec(10, 20),
       z: 2,
     });
@@ -75,7 +80,12 @@ export abstract class LevelLayout extends ex.Scene implements iSceneNode {
     scoreLabel.color = ex.Color.Black;
     scoreLabel.on("preupdate", (evt) => {
       scoreLabel.text =
-        "H" + stats.health + " S" + stats.score + " Opdracht: " + assignment;
+        "♥".repeat(stats.health) +
+        "♡".repeat(5 - stats.health) +
+        " S" +
+        stats.score +
+        " Opdracht: " +
+        assignment;
     });
     engine.add(scoreLabel);
 

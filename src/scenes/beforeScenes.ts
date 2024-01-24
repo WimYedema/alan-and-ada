@@ -26,8 +26,8 @@ export class BeforeLevel2 extends CutScene {
   public text = [
     "Goed gedaan!\n" +
       "In het volgende level is een vloer niet lang genoeg.\n" +
-      "De code voor dit level vind je in src/scenes/level2.ts\n" +
       "Kan jij ervoor zorgen dat hij langer wordt?",
+    "De code voor dit level vind je in src/scenes/level2.ts\n",
   ];
 }
 
@@ -40,6 +40,7 @@ export class BeforeLevel3 extends CutScene {
 
   public text = [
     "Mooi. Je bent klaar voor het echte werk.",
-    "Het volgende level, src/scenes/level3.ts, mag je helemaal zelf bedenken.",
+    "Het volgende level, src/scenes/level3.ts, is nog niet af.\n" +
+      "Je mag zelf bedenken hoe je het af gaat maken.",
   ];
 }

@@ -15,18 +15,29 @@ export class Level3 extends LevelLayout implements iSceneNode {
   levelSize = new ex.Vector(22, 22);
 
   layoutLevel(engine: ex.Engine) {
-    this.playerStartsAt({ x: 2, y: 0 });
-    engine.add(new Gate({ x: 20, y: 0, goal: 0 }));
+    // Dit is een voorbeeld van een level, maar hij is nog niet af.
+    // Je mag alles veranderen, en dingen toevoegen.
+    engine.add(new Floor({ x: 0, y: 1, right: 22 }));
+    this.playerStartsAt({ x: 2, y: 1 });
+
+    engine.add(new Floor({ x: 8, y: 5, right: 11 }));
+    engine.add(new Wall({ x: 7, y: 5, up: 2 }));
+    engine.add(new Wall({ x: 19, y: 5, up: 2 }));
+    engine.add(new Ground({ x: 7, y: 8.5, down: 2, right: 1, scale: 0.5 }));
+    engine.add(new Baddie({ x: 10, y: 5 }));
+
+    engine.add(new Lift({ startPos: { x: 1, y: 6 }, endPos: { x: 1, y: 10 } }));
+    engine.add(new Lift({ startPos: { x: 16, y: 6 }, endPos: { x: 2, y: 6 } }));
+
+    engine.add(new Floor({ x: 5, y: 10, right: 16 }));
+    engine.add(new Gate({ x: 13, y: 10, goal: 0 }));
 
     // -----
-    // Hier zijn een paar voorbeelden van dingen die je aan je level kan toevoegen.
+    // Hier zijn nog een paar voorbeelden van dingen die je aan je level kan toevoegen.
     //
-    // engine.add(new Floor({ x: 2, y: 3, right: 2 }));
-    // engine.add(new Wall({ x: 5, y: 5, up: 5 }));
-    // engine.add(new Potion({ x: 7, y: 0, potionColor: "purple" }));
-    // engine.add(new Potion({ x: 9, y: 0, potionColor: "yellow" }));
-    // engine.add(new Ground({ x: 8, y: 5, down: 3, right: 2 }));
-    // engine.add(new Lift({ startPos: { x: 11, y: 1 }, endPos: { x: 11, y: 5 } }));
-    // engine.add(new Baddie({ x: 21, y: 0 }));
+    // engine.add(new Floor({ x: 1, y: 1, right: 1 }));
+    // engine.add(new Wall({ x: 1, y: 1, up: 1 }));
+    // engine.add(new Potion({ x: 1, y: 1, potionType: "shrink" }));
+    // engine.add(new Potion({ x: 1, y: 1, potionType: "grow" }));
   }
 }

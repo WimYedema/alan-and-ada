@@ -1,6 +1,6 @@
 export class Stats {
   public charName: string = "alan";
-  public health: number = 100;
+  public health: number = 5;
   public assignment: string = "";
   public gameOver: boolean = false;
   public nextScene: boolean = false;
@@ -16,7 +16,7 @@ export class Stats {
     this.score = d["score"] ?? this.score;
   }
   public reset() {
-    this.health = 100;
+    this.health = 5;
     this.gameOver = false;
     this.score = 0;
     this.assignment = "";
