@@ -1,6 +1,8 @@
 import * as ex from "excalibur";
 
 export class Actor extends ex.Actor {
+  dying: boolean = false;
+
   kill(respawn?: number): void {
     if (respawn !== undefined) {
       const scene = this.scene;
@@ -11,6 +13,9 @@ export class Actor extends ex.Actor {
     super.kill();
   }
   killAfter(seconds: number, respawn?: number, cb?: () => void): void {
+    if (this.dying) return;
+    //    console.log("kill after", seconds, this);
+    this.dying = true;
     this.scene.engine.clock.schedule(() => {
       if (cb !== undefined) cb();
       this.kill(respawn);
