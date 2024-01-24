@@ -12,14 +12,14 @@ export class Actor extends ex.Actor {
     }
     super.kill();
   }
-  killAfter(seconds: number, respawn?: number, cb?: () => void): void {
-    if (this.dying) return;
-    //    console.log("kill after", seconds, this);
+  killAfter(seconds: number, respawn?: number, cb?: () => void): boolean {
+    if (this.dying) return false;
     this.dying = true;
     this.scene.engine.clock.schedule(() => {
       if (cb !== undefined) cb();
       this.kill(respawn);
     }, seconds * 1000);
+    return true;
   }
 }
 
