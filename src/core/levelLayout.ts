@@ -57,13 +57,15 @@ export abstract class LevelLayout extends ex.Scene implements iSceneNode {
   statsLine() {
     let x = 0;
     let y = 0;
+    let h = stats.health;
     if (this.player !== undefined) {
       x = Math.floor(this.player.pos.x / tileSize);
       y = -Math.floor(this.player.pos.y / tileSize);
     }
+    h = Math.max(0, Math.min(stats.health, 5));
     return (
-      "♥".repeat(stats.health) +
-      "♡".repeat(5 - stats.health) +
+      "♥".repeat(h) +
+      "♡".repeat(5 - h) +
       " X:" +
       x +
       " Y:" +
