@@ -66,9 +66,9 @@ export abstract class LevelLayout extends ex.Scene implements iSceneNode {
     return (
       "♥".repeat(h) +
       "♡".repeat(5 - h) +
-      " X:" +
+      " x:" +
       x +
-      " Y:" +
+      " y:" +
       y +
       " Opdracht: " +
       this.assignment
