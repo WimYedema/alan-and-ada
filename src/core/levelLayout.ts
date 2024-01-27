@@ -23,6 +23,7 @@ export abstract class LevelLayout extends ex.Scene implements iSceneNode {
 
   protected playerStart: ex.Vector = ex.vec(2, 2);
   protected player?: Player;
+  protected assignment: string = "";
 
   /**
    * Populate the level with actors, creating the walls, floors, monsters,
@@ -53,22 +54,36 @@ export abstract class LevelLayout extends ex.Scene implements iSceneNode {
     this.camera.clearAllStrategies();
     this.camera.strategy.elasticToActor(player, 0.05, 0.1);
   }
+  statsLine() {
+    let x = 0;
+    let y = 0;
+    let h = stats.health;
+    if (this.player !== undefined) {
+      x = Math.floor(this.player.pos.x / tileSize);
+      y = -Math.floor(this.player.pos.y / tileSize);
+    }
+    h = Math.max(0, Math.min(stats.health, 5));
+    return (
+      "♥".repeat(h) +
+      "♡".repeat(5 - h) +
+      " x:" +
+      x +
+      " y:" +
+      y +
+      " Opdracht: " +
+      this.assignment
+    );
+  }
   onInitialize(engine: ex.Engine) {
     this.layoutLevel(engine);
 
     this.player = new Player(this.playerStart.x, this.playerStart.y);
 
     engine.add(this.player);
-    let assignment = "src/scenes/" + this.thisScene + ".ts";
+    this.assignment = "src/scenes/" + this.thisScene + ".ts";
 
     const scoreLabel = new ex.Label({
-      text:
-        "♥".repeat(stats.health) +
-        "♡".repeat(5 - stats.health) +
-        " S" +
-        stats.score +
-        " Opdracht: " +
-        assignment,
+      text: this.statsLine(),
       pos: ex.vec(10, 20),
       z: 2,
     });
@@ -79,13 +94,7 @@ export abstract class LevelLayout extends ex.Scene implements iSceneNode {
     scoreLabel.transform.coordPlane = ex.CoordPlane.Screen;
     scoreLabel.color = ex.Color.Black;
     scoreLabel.on("preupdate", (evt) => {
-      scoreLabel.text =
-        "♥".repeat(stats.health) +
-        "♡".repeat(5 - stats.health) +
-        " S" +
-        stats.score +
-        " Opdracht: " +
-        assignment;
+      scoreLabel.text = this.statsLine();
     });
     engine.add(scoreLabel);
 
