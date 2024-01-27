@@ -6,6 +6,7 @@ export class Stats {
   public nextScene: boolean = false;
   public currentNode: string = "playerSelect";
   public score: number = 0;
+  
   load(d: any) {
     this.charName = d["charName"] ?? this.charName;
     this.health = d["health"] ?? this.health;
