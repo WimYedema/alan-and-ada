@@ -66,6 +66,12 @@ engine.on("preupdate", () => {
   } else if (showDebug) {
     if (engine.input.keyboard.wasPressed(ex.Input.Keys.KeyN)) {
       stats.nextScene = true;
+    } else if (engine.input.keyboard.wasPressed(ex.Input.Keys.Key1)) {
+      stats.scaleTarget = 1;
+      engine.currentScene.camera.zoomOverTime(1 / stats.scaleTarget, 2000);
+    } else if (engine.input.keyboard.wasPressed(ex.Input.Keys.Key2)) {
+      stats.scaleTarget = 0.5;
+      engine.currentScene.camera.zoomOverTime(1 / stats.scaleTarget, 2000);
     } else if (engine.input.keyboard.wasPressed(ex.Input.Keys.KeyR)) {
       stats.currentNode = "playerSelect";
       stats.reset();

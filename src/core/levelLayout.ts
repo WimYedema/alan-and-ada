@@ -3,7 +3,7 @@ import { Player } from "../actors/player";
 import { stats } from "./stats";
 import { iSceneNode } from "./cutScene";
 import { iLocation } from "./location";
-import { tileSize } from "./resources";
+import { gridSpace, tileSize } from "./resources";
 import { Floor, Wall } from "../actors/ground";
 
 /**
@@ -53,6 +53,7 @@ export abstract class LevelLayout extends ex.Scene implements iSceneNode {
   initCamera(player: ex.Actor) {
     this.camera.clearAllStrategies();
     this.camera.strategy.elasticToActor(player, 0.05, 0.1);
+    this.camera.zoom = 1 / stats.scaleTarget;
   }
   statsLine() {
     let x = 0;
@@ -73,6 +74,29 @@ export abstract class LevelLayout extends ex.Scene implements iSceneNode {
       " Opdracht: " +
       this.assignment
     );
+  }
+  onActivate(_context: ex.SceneActivationContext<unknown>): void {
+    super.onActivate(_context);
+    console.log(_context, this.playerStart);
+    if (this.player === undefined) {
+      return;
+    }
+    this.player.pos = gridSpace({
+      x: this.playerStart.x,
+      y: this.playerStart.y,
+    });
+    this.initCamera(this.player);
+    if (this.levelSize !== undefined) {
+      this.camera.strategy.lockToActor(this.player);
+      this.camera.strategy.limitCameraBounds(
+        new ex.BoundingBox(
+          0,
+          -this.levelSize.y * tileSize,
+          this.levelSize.x * tileSize,
+          0,
+        ),
+      );
+    }
   }
   onInitialize(engine: ex.Engine) {
     this.layoutLevel(engine);

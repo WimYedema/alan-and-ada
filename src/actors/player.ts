@@ -1,7 +1,5 @@
 import * as ex from "excalibur";
 import {
-  girl,
-  boy,
   Resources,
   tileSize,
   playerCharacters,
@@ -9,7 +7,6 @@ import {
 } from "../core/resources";
 import { Baddie } from "./baddie";
 import { stats } from "../core/stats";
-import { Ground } from "./ground";
 import { iArtifact } from "../core/iartifact";
 import { Lift } from "./lift";
 import { GameActor } from "../core/actor";
@@ -37,10 +34,10 @@ export class Player extends GameActor<PlayerState> {
     return this._state.hurt;
   }
   set scaleTarget(target: number) {
-    this._state.scaleTarget = target;
+    stats.scaleTarget = target;
   }
   get scaleTarget(): number {
-    return this._state.scaleTarget;
+    return stats.scaleTarget;
   }
   set atArtifact(artifact: iArtifact | null) {
     this._state.atArtifact = artifact;
@@ -62,6 +59,7 @@ export class Player extends GameActor<PlayerState> {
     if (this._state.charName != stats.charName) {
       this.reinitialize(engine);
     }
+    this.scale = ex.vec(stats.scaleTarget, stats.scaleTarget);
   }
   initializeActor(engine: ex.Engine) {
     // Initialize actor
@@ -174,11 +172,11 @@ export class Player extends GameActor<PlayerState> {
 
   // After main update, once per frame execute this code
   onPreUpdate(engine: ex.Engine, delta: number) {
-    if (this.scale.x < this._state.scaleTarget) {
-      const new_scale = Math.min(this.scale.x + 0.01, this._state.scaleTarget);
+    if (this.scale.x < this.scaleTarget) {
+      const new_scale = Math.min(this.scale.x + 0.01, this.scaleTarget);
       this.scale = ex.vec(new_scale, new_scale);
-    } else if (this._state.scaleTarget < this.scale.x) {
-      const new_scale = Math.max(this.scale.x - 0.01, this._state.scaleTarget);
+    } else if (this.scaleTarget < this.scale.x) {
+      const new_scale = Math.max(this.scale.x - 0.01, this.scaleTarget);
       this.scale = ex.vec(new_scale, new_scale);
     }
     // If hurt, count down
@@ -191,12 +189,11 @@ export class Player extends GameActor<PlayerState> {
       if (this._state.groundVel.y != 0) {
         this.vel.y = this._state.groundVel.y;
       }
-      this._state.groundVel.y = 0;
       // Player input
       if (engine.input.keyboard.isHeld(ex.Input.Keys.Left)) {
-        this.vel.x -= 200 * this._state.scaleTarget;
+        this.vel.x -= 200 * this.scaleTarget;
       } else if (engine.input.keyboard.isHeld(ex.Input.Keys.Right)) {
-        this.vel.x += 200 * this._state.scaleTarget;
+        this.vel.x += 200 * this.scaleTarget;
       }
 
       if (
@@ -209,7 +206,7 @@ export class Player extends GameActor<PlayerState> {
         engine.input.keyboard.wasPressed(ex.Input.Keys.Up) &&
         this._state.onGround
       ) {
-        this.vel.y = -tileSize * 20 * Math.sqrt(this._state.scaleTarget / 3);
+        this.vel.y = -tileSize * 20 * Math.sqrt(this.scaleTarget / 3);
         this.graphics.use("jumpleft");
         Resources.jump.play(0.1);
       }
@@ -218,7 +215,7 @@ export class Player extends GameActor<PlayerState> {
     // Change animation based on velocity
     if (!this._state.hurt) {
       let relvel = this.vel.sub(this._state.groundVel);
-      if (relvel.y == 0) {
+      if (Math.abs(relvel.y) < 0.1) {
         this._state.onGround = true;
         if (relvel.x === 0) {
           this.graphics.use("idle");
@@ -236,5 +233,6 @@ export class Player extends GameActor<PlayerState> {
         }
       }
     }
+    this._state.groundVel.y = 0;
   }
 }

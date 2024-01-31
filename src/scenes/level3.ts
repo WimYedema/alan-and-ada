@@ -26,6 +26,7 @@ export class Level3 extends LevelLayout implements iSceneNode {
     engine.add(new Ground({ x: 7, y: 8.5, down: 2, right: 1, scale: 0.5 }));
     engine.add(new Baddie({ x: 10, y: 5 }));
 
+    engine.add(new Floor({ x: 3, y: 3, right: 1 }));
     engine.add(new Lift({ startPos: { x: 1, y: 6 }, endPos: { x: 1, y: 10 } }));
     engine.add(new Lift({ startPos: { x: 16, y: 6 }, endPos: { x: 2, y: 6 } }));
 
