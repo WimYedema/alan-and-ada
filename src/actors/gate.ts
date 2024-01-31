@@ -13,6 +13,7 @@ import { GameActor } from "../core/actor";
 
 export interface GateArgs extends iLocation {
   goal: number;
+  name?: string;
 }
 
 export class GateState {
@@ -28,7 +29,7 @@ export class Gate extends GameActor<GateState> implements iArtifact {
   goal: number = 0;
   constructor(args: GateArgs) {
     super({
-      name: "Gate",
+      name: args.name ?? "Gate",
       pos: gridSpace(args),
       scale: new ex.Vector(0.5, 0.5),
       anchor: ex.Vector.Down,

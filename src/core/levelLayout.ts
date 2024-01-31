@@ -3,7 +3,7 @@ import { Player } from "../actors/player";
 import { stats } from "./stats";
 import { iSceneNode } from "./cutScene";
 import { iLocation } from "./location";
-import { gridSpace, tileSize } from "./resources";
+import { gridSpace, sceneSpace, tileSize } from "./resources";
 import { Floor, Wall } from "../actors/ground";
 
 /**
@@ -74,6 +74,13 @@ export abstract class LevelLayout extends ex.Scene implements iSceneNode {
       " Opdracht: " +
       this.assignment
     );
+  }
+  getGatePos(name: string) : iLocation {
+    const gate: ex.Entity =
+      this.world.entityManager.getByName(name)[0];
+
+    const pos = sceneSpace(gate.get(ex.TransformComponent)!.pos);
+    return { x: pos.x + 1, y: pos.y };
   }
   onActivate(_context: ex.SceneActivationContext<unknown>): void {
     super.onActivate(_context);

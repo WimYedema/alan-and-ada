@@ -202,6 +202,10 @@ export function gridSpace(loc: iLocation): ex.Vector {
   return ex.vec(loc.x, -loc.y).scale(tileSize);
 }
 
+export function sceneSpace(vec: ex.Vector): iLocation {
+  return { x: vec.x / tileSize, y: -vec.y / tileSize };
+}
+
 export {
   Resources,
   loader,
