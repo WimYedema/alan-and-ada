@@ -76,7 +76,7 @@ export abstract class LevelLayout extends Scene implements iSceneNode {
       this.assignment
     );
   }
-  onEnterThroughGate(entryPos: ex.Vector | null): void {
+  onEnterThroughGate(entryPos: ex.Vector | null, gate: string): void {
     if (this.introScene !== undefined) {
       sceneStack.push(this.engine, this.introScene);
     }

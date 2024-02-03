@@ -19,7 +19,7 @@ type SceneActivationData =
 export abstract class Scene extends ex.Scene {
   onActivatePush(): void {}
   onActivatePop(): void {}
-  onEnterThroughGate(entryPos: ex.Vector | null): void {}
+  onEnterThroughGate(entryPos: ex.Vector | null, gate: string): void {}
 
   getGatePos(name: string): ex.Vector | null {
     const matches: ex.Entity[] = this.world.entityManager.getByName(name);
@@ -40,7 +40,7 @@ export abstract class Scene extends ex.Scene {
         break;
       case "goto":
         const entryPos = this.getGatePos(context.data?.gate);
-        this.onEnterThroughGate(entryPos);
+        this.onEnterThroughGate(entryPos, context.data?.gate);
         break;
       default:
         console.error("unexpected activation method in:", context.data);
