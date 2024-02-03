@@ -14,6 +14,7 @@ import { iSceneNode } from "./core/cutScene";
 import { Level2 } from "./scenes/level2";
 import { Finish } from "./scenes/finish";
 import { Level3 } from "./scenes/level3";
+import { sceneStack } from "./core/sceneStack";
 
 const engine = new ex.Engine({
   backgroundColor: ex.Color.fromHex("#5fcde4"),
@@ -64,7 +65,7 @@ const passages: { [id: string]: { scene: string; gate?: string } } = {
 
 const st = JSON.parse(window.localStorage.getItem("stats") || "{}");
 stats.load(st);
-engine.goToScene(stats.currentNode);
+sceneStack.resetTo(engine, stats.currentNode);
 let showDebug = false;
 
 // Game events to handle
@@ -84,7 +85,7 @@ engine.on("preupdate", () => {
     } else if (engine.input.keyboard.wasPressed(ex.Input.Keys.KeyR)) {
       stats.currentNode = "playerSelect";
       stats.reset();
-      engine.goToScene(nodes[stats.currentNode].thisScene);
+      sceneStack.resetTo(engine, nodes[stats.currentNode].thisScene);
       window.localStorage.setItem("stats", JSON.stringify(stats));
     }
   }
@@ -104,11 +105,11 @@ engine.on("preupdate", () => {
     stats.inGate = null;
     stats.nextScene = false;
     console.log("switching to ", stats.currentNode);
-    engine.goToScene(nodes[stats.currentNode].thisScene, { gate: target });
+    sceneStack.goto(engine, stats.currentNode, target??"");
     window.localStorage.setItem("stats", JSON.stringify(stats));
   } else if (stats.gameOver) {
     stats.currentNode = "gameover";
-    engine.goToScene("gameover");
+    sceneStack.resetTo(engine, "gameover");
   }
 });
 engine.on("gameover", () => {

@@ -48,22 +48,27 @@ export abstract class Scene extends ex.Scene {
 
 export class SceneStack {
   stack: string[] = [];
-  constructor(protected engine: ex.Engine) {}
 
-  push(name: string) {
-    this.stack.push(name);
-    this.engine.goToScene(name, { method: "push" });
+  resetTo(engine: ex.Engine, name: string) {
+    this.stack = [name];
+    engine.goToScene(name, { method: "push" });
   }
-  pop() {
+  push(engine: ex.Engine, name: string) {
+    this.stack.push(name);
+    engine.goToScene(name, { method: "push" });
+  }
+  pop(engine: ex.Engine) {
     if (this.stack.length <= 1) {
       console.error("Cannot pop the last scene.");
     } else {
       const name = this.stack.pop();
-      this.engine.goToScene(name!, { method: "pop" });
+      engine.goToScene(name!, { method: "pop" });
     }
   }
-  goto(name: string, gate: string) {
+  goto(engine: ex.Engine, name: string, gate: string) {
     this.stack[-1] = name;
-    this.engine.goToScene(name, { method: "goto", gate: gate });
+    engine.goToScene(name, { method: "goto", gate: gate });
   }
 }
+
+export const sceneStack = new SceneStack();
