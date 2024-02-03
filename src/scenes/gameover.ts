@@ -4,7 +4,6 @@ import { stats } from "../core/stats";
 
 export class GameOver extends ex.Scene implements iSceneNode {
   thisScene = "gameover";
-  nextScene = "playerSelect";
 
   onInitialize(engine: ex.Engine) {
     const label = new ex.Label({

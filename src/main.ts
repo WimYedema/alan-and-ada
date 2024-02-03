@@ -36,7 +36,7 @@ ex.Physics.acc = new ex.Vector(0, 800);
 let nodes: { [name: string]: iSceneNode & ex.Scene } = {};
 
 function addNode(node: iSceneNode & ex.Scene) {
-  console.log("Adding scene ", node.thisScene, " -> ", node.nextScene);
+  console.log("Adding scene ", node.thisScene);
   engine.add(node.thisScene, node);
   nodes[node.thisScene] = node;
 }
@@ -55,9 +55,10 @@ addNode(new Finish());
 addNode(new GameOver());
 
 const passages: { [id: string]: { scene: string; gate?: string } } = {
+  startGame: { scene: "level1", gate: "startGate" },
   startGate: { scene: "level1" },
-  toLevel2: { scene: "beforeLevel2" },
-  toLevel3: { scene: "beforeLevel3" },
+  toLevel2: { scene: "level2" },
+  toLevel3: { scene: "level3" },
   toExample: { scene: "example", gate: "ExampleToLevel3" },
   ExampleToLevel3: { scene: "level3", gate: "toExample" },
   ExampleToFinish: { scene: "finish" },
@@ -75,7 +76,7 @@ engine.on("preupdate", () => {
     engine.showDebug(showDebug);
   } else if (showDebug) {
     if (engine.input.keyboard.wasPressed(ex.Input.Keys.KeyN)) {
-      stats.nextScene = true;
+      console.error("Cannot move to the next scene yet");
     } else if (engine.input.keyboard.wasPressed(ex.Input.Keys.Key1)) {
       stats.scaleTarget = 1;
       engine.currentScene.camera.zoomOverTime(1 / stats.scaleTarget, 2000);
@@ -83,14 +84,13 @@ engine.on("preupdate", () => {
       stats.scaleTarget = 0.5;
       engine.currentScene.camera.zoomOverTime(1 / stats.scaleTarget, 2000);
     } else if (engine.input.keyboard.wasPressed(ex.Input.Keys.KeyR)) {
-      stats.currentNode = "playerSelect";
       stats.reset();
-      sceneStack.resetTo(engine, nodes[stats.currentNode].thisScene);
+      sceneStack.resetTo(engine, "playerSelect");
       window.localStorage.setItem("stats", JSON.stringify(stats));
     }
   }
 
-  if (stats.nextScene) {
+  if (stats.inGate !== null) {
     let target: string | null = null;
     if (stats.inGate !== null && stats.inGate in passages) {
       console.log("entered gate", stats.inGate);
@@ -98,14 +98,9 @@ engine.on("preupdate", () => {
       if (passages[stats.inGate].gate !== undefined) {
         target = passages[stats.inGate].gate!;
       }
-    } else {
-      console.log("switching from ", stats.currentNode);
-      stats.currentNode = nodes[stats.currentNode].nextScene;
+      sceneStack.goto(engine, passages[stats.inGate].scene, target ?? "");
+      stats.inGate = null;
     }
-    stats.inGate = null;
-    stats.nextScene = false;
-    console.log("switching to ", stats.currentNode);
-    sceneStack.goto(engine, stats.currentNode, target??"");
     window.localStorage.setItem("stats", JSON.stringify(stats));
   } else if (stats.gameOver) {
     stats.currentNode = "gameover";
@@ -115,6 +110,7 @@ engine.on("preupdate", () => {
 engine.on("gameover", () => {
   console.log("Game over reset");
   stats.reset();
+  sceneStack.resetTo(engine, "playerSelect");
 });
 // Start the engine
 engine.start(loader).then(() => {

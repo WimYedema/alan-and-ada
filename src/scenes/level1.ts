@@ -7,7 +7,7 @@ import { sceneSpace } from "../core/resources";
 
 export class Level1 extends LevelLayout implements iSceneNode {
   thisScene = "level1";
-  nextScene = "beforeLevel2";
+  introScene = "beforeLevel1";
 
   layoutLevel(engine: ex.Engine) {
     this.playerStartsAt({ x: 2, y: 2 });

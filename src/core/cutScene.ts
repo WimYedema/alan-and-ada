@@ -4,6 +4,7 @@ import { TextBubble } from "./textBubble";
 import { playerCharacters } from "./resources";
 import { SceneActor } from "./actor";
 import { iLocation } from "./location";
+import { sceneStack } from "./sceneStack";
 
 /**
  * A SceneNode provides the links between scenes.
@@ -13,12 +14,6 @@ export interface iSceneNode {
    * The (unique) name of this scene.
    */
   thisScene: string;
-
-  /**
-   * The name of the next scene, the scene the player will go to after passing
-   * the exit gate.
-   */
-  nextScene: string;
 }
 
 export class Speaker extends SceneActor<null> {
@@ -57,7 +52,7 @@ export abstract class CutScene extends ex.Scene {
       this.text,
     );
     bubble.on(`sequence-${bubble.id}`, () => {
-      stats.nextScene = true;
+      sceneStack.pop(this.engine);
     });
     engine.add(bubble);
   }

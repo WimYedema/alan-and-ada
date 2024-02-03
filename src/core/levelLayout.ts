@@ -5,6 +5,7 @@ import { iSceneNode } from "./cutScene";
 import { iLocation } from "./location";
 import { gridSpace, sceneSpace, tileSize } from "./resources";
 import { Floor, Wall } from "../actors/ground";
+import { Scene, sceneStack } from "./sceneStack";
 
 /**
  * The LevelLayout is the foundation for all *playable* levels. It set the
@@ -16,9 +17,9 @@ import { Floor, Wall } from "../actors/ground";
  *
  * @noInheritDoc
  */
-export abstract class LevelLayout extends ex.Scene implements iSceneNode {
+export abstract class LevelLayout extends Scene implements iSceneNode {
   abstract thisScene: string;
-  abstract nextScene: string;
+  protected introScene?: string;
   protected levelSize?: ex.Vector;
 
   protected playerStart: iLocation = { x: 2, y: 2 };
@@ -75,36 +76,18 @@ export abstract class LevelLayout extends ex.Scene implements iSceneNode {
       this.assignment
     );
   }
-  getGatePos(name: string): iLocation | null {
-    const matches: ex.Entity[] = this.world.entityManager.getByName(name);
-    if (matches.length != 1) {
-      return null;
+  onEnterThroughGate(entryPos: ex.Vector | null): void {
+    if (this.introScene !== undefined) {
+      sceneStack.push(this.engine, this.introScene);
     }
-    const gate = matches[0];
-    const pos = sceneSpace(gate.get(ex.TransformComponent)!.pos);
-    return { x: pos.x + 1, y: pos.y };
-  }
-  onActivate(_context: ex.SceneActivationContext<unknown>): void {
-    super.onActivate(_context);
     if (this.player === undefined) {
       return;
     }
-    let startPos = this.playerStart;
-    if (
-      typeof _context.data == "object" &&
-      _context.data !== null &&
-      "gate" in _context.data &&
-      typeof _context.data.gate == "string"
-    ) {
-      const enteredAt: string = _context.data.gate;
-      console.log("entered at", enteredAt);
-
-      const pos = this.getGatePos(enteredAt);
-      if (pos !== null) startPos = pos;
-      else console.warn("no such gate");
-    } else {
-      console.log("start at default");
+    let pos = this.playerStart;
+    if (entryPos !== null) {
+      pos = sceneSpace(entryPos!);
     }
+    const startPos = { x: pos.x + 1, y: pos.y };
     this.player.pos = gridSpace({
       x: startPos.x,
       y: startPos.y,

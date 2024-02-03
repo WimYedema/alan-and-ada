@@ -3,7 +3,6 @@ export class Stats {
   public health: number = 5;
   public assignment: string = "";
   public gameOver: boolean = false;
-  public nextScene: boolean = false;
   public inGate: string|null = null;
   public currentNode: string = "playerSelect";
   public score: number = 0;
@@ -14,7 +13,6 @@ export class Stats {
     this.health = d["health"] ?? this.health;
     this.assignment = d["assignment"] ?? this.assignment;
     this.gameOver = d["gameOver"] ?? this.gameOver;
-    this.nextScene = d["nextScene"] ?? this.nextScene;
     this.currentNode = d["currentNode"] ?? this.currentNode;
     this.score = d["score"] ?? this.score;
     this.scaleTarget = d["scaleTarget"] ?? this.scaleTarget;
@@ -24,7 +22,6 @@ export class Stats {
     this.gameOver = false;
     this.score = 0;
     this.assignment = "";
-    this.nextScene = true;
     this.scaleTarget = 1;
   }
 }

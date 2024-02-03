@@ -43,7 +43,7 @@ class SelectorButton extends ex.ScreenElement {
 
     this.on("pointerup", () => {
       stats.charName = this.charName;
-      stats.nextScene = true;
+      stats.inGate = "startGame";
     });
 
     this.on("pointerenter", () => {
@@ -72,7 +72,6 @@ function sequence(scene: ex.Scene, actors: ex.Actor[]): void {
 
 export class PlayerSelect extends ex.Scene implements iSceneNode {
   thisScene: string = "playerSelect";
-  nextScene: string = "beforeLevel1";
 
   onInitialize(engine: ex.Engine) {
     engine.add(

@@ -4,7 +4,6 @@ import { stats } from "../core/stats";
 
 export class Finish extends ex.Scene implements iSceneNode {
   thisScene = "finish";
-  nextScene = "playerSelect";
 
   onInitialize(engine: ex.Engine) {
     const congrats = new ex.Label({

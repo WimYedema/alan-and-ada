@@ -9,7 +9,7 @@ import { Lift } from "../actors/lift";
 
 export class Level3 extends LevelLayout implements iSceneNode {
   thisScene = "level3";
-  nextScene = "example";
+  introScene = "beforeLevel3";
 
   // Dit is de grootte van je level in (Breedte, Hoogte). Aanpassen mag!
   levelSize = new ex.Vector(22, 22);

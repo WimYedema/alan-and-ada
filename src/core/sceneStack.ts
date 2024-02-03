@@ -1,4 +1,5 @@
 import * as ex from "excalibur";
+import { stats } from "./stats";
 
 interface PushSceneActivationData {
   method: "push";
@@ -23,6 +24,7 @@ export abstract class Scene extends ex.Scene {
   getGatePos(name: string): ex.Vector | null {
     const matches: ex.Entity[] = this.world.entityManager.getByName(name);
     if (matches.length != 1) {
+      console.warn("no such gate", name);
       return null;
     }
     const gate = matches[0];
@@ -51,21 +53,27 @@ export class SceneStack {
 
   resetTo(engine: ex.Engine, name: string) {
     this.stack = [name];
+    stats.currentNode = name;
     engine.goToScene(name, { method: "push" });
   }
   push(engine: ex.Engine, name: string) {
+    console.log("pushing", name);
     this.stack.push(name);
     engine.goToScene(name, { method: "push" });
   }
   pop(engine: ex.Engine) {
+    console.log("pop scene");
     if (this.stack.length <= 1) {
       console.error("Cannot pop the last scene.");
     } else {
-      const name = this.stack.pop();
+      this.stack.pop();
+      const name = this.stack[-1];
+      console.log("pop to", name);
       engine.goToScene(name!, { method: "pop" });
     }
   }
   goto(engine: ex.Engine, name: string, gate: string) {
+    stats.currentNode = name;
     this.stack[-1] = name;
     engine.goToScene(name, { method: "goto", gate: gate });
   }
