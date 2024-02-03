@@ -53,6 +53,15 @@ addNode(new Example());
 addNode(new Finish());
 addNode(new GameOver());
 
+const passages: { [id: string]: { scene: string; gate?: string } } = {
+  startGate: { scene: "level1" },
+  toLevel2: { scene: "beforeLevel2" },
+  toLevel3: { scene: "beforeLevel3" },
+  toExample: { scene: "example", gate: "ExampleToLevel3" },
+  ExampleToLevel3: { scene: "level3", gate: "toExample" },
+  ExampleToFinish: { scene: "finish" },
+};
+
 const st = JSON.parse(window.localStorage.getItem("stats") || "{}");
 stats.load(st);
 engine.goToScene(stats.currentNode);
@@ -81,11 +90,21 @@ engine.on("preupdate", () => {
   }
 
   if (stats.nextScene) {
-    console.log("switching from ", stats.currentNode);
-    stats.currentNode = nodes[stats.currentNode].nextScene;
+    let target: string | null = null;
+    if (stats.inGate !== null && stats.inGate in passages) {
+      console.log("entered gate", stats.inGate);
+      stats.currentNode = passages[stats.inGate].scene;
+      if (passages[stats.inGate].gate !== undefined) {
+        target = passages[stats.inGate].gate!;
+      }
+    } else {
+      console.log("switching from ", stats.currentNode);
+      stats.currentNode = nodes[stats.currentNode].nextScene;
+    }
+    stats.inGate = null;
     stats.nextScene = false;
     console.log("switching to ", stats.currentNode);
-    engine.goToScene(nodes[stats.currentNode].thisScene);
+    engine.goToScene(nodes[stats.currentNode].thisScene, { gate: target });
     window.localStorage.setItem("stats", JSON.stringify(stats));
   } else if (stats.gameOver) {
     stats.currentNode = "gameover";

@@ -19,14 +19,14 @@ export class Level2 extends LevelLayout implements iSceneNode {
       new Floor({
         x: 3,
         y: 0,
-        right: 1,
+        right: 5,
       }),
     );
     // LET OP: Na de aanpassing moet je het spel herladen!
     // ---
 
     engine.add(new Floor({ x: 11, y: 2, right: 2 }));
-    engine.add(new Gate({ x: 11, y: 2, goal: 0 }));
+    engine.add(new Gate({ x: 11, y: 2, goal: 0, name: "toLevel3" }));
     engine.add(new Wall({ x: 13, y: 2, up: 6 }));
   }
 }

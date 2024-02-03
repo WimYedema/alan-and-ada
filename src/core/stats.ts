@@ -4,6 +4,7 @@ export class Stats {
   public assignment: string = "";
   public gameOver: boolean = false;
   public nextScene: boolean = false;
+  public inGate: string|null = null;
   public currentNode: string = "playerSelect";
   public score: number = 0;
   public scaleTarget: number = 1;

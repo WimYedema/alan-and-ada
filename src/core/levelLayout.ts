@@ -21,7 +21,7 @@ export abstract class LevelLayout extends ex.Scene implements iSceneNode {
   abstract nextScene: string;
   protected levelSize?: ex.Vector;
 
-  protected playerStart: ex.Vector = ex.vec(2, 2);
+  protected playerStart: iLocation = { x: 2, y: 2 };
   protected player?: Player;
   protected assignment: string = "";
 
@@ -40,7 +40,7 @@ export abstract class LevelLayout extends ex.Scene implements iSceneNode {
    * @param args The location where the player will start.
    */
   playerStartsAt(args: iLocation) {
-    this.playerStart = ex.vec(args.x, args.y);
+    this.playerStart = args;
   }
   /**
    * @experimental
@@ -75,22 +75,39 @@ export abstract class LevelLayout extends ex.Scene implements iSceneNode {
       this.assignment
     );
   }
-  getGatePos(name: string) : iLocation {
-    const gate: ex.Entity =
-      this.world.entityManager.getByName(name)[0];
-
+  getGatePos(name: string): iLocation | null {
+    const matches: ex.Entity[] = this.world.entityManager.getByName(name);
+    if (matches.length != 1) {
+      return null;
+    }
+    const gate = matches[0];
     const pos = sceneSpace(gate.get(ex.TransformComponent)!.pos);
     return { x: pos.x + 1, y: pos.y };
   }
   onActivate(_context: ex.SceneActivationContext<unknown>): void {
     super.onActivate(_context);
-    console.log(_context, this.playerStart);
     if (this.player === undefined) {
       return;
     }
+    let startPos = this.playerStart;
+    if (
+      typeof _context.data == "object" &&
+      _context.data !== null &&
+      "gate" in _context.data &&
+      typeof _context.data.gate == "string"
+    ) {
+      const enteredAt: string = _context.data.gate;
+      console.log("entered at", enteredAt);
+
+      const pos = this.getGatePos(enteredAt);
+      if (pos !== null) startPos = pos;
+      else console.warn("no such gate");
+    } else {
+      console.log("start at default");
+    }
     this.player.pos = gridSpace({
-      x: this.playerStart.x,
-      y: this.playerStart.y,
+      x: startPos.x,
+      y: startPos.y,
     });
     this.initCamera(this.player);
     if (this.levelSize !== undefined) {

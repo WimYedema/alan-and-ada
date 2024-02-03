@@ -78,6 +78,7 @@ export class Gate extends GameActor<GateState> implements iArtifact {
   activateArtifact(player: Player) {
     if (this._state.isOpen) {
       stats.nextScene = true;
+      stats.inGate = this.name;
     }
   }
   onCollisionStart(evt: ex.CollisionStartEvent) {
