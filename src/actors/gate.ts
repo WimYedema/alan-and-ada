@@ -13,7 +13,7 @@ import { GameActor } from "../core/actor";
 import { sceneStack } from "../core/sceneStack";
 
 export interface GateArgs extends iLocation {
-  goal: number;
+  goal?: number;
   name?: string;
   triggerOnExit?: string;
 }
@@ -47,7 +47,7 @@ export class Gate extends GameActor<GateState> implements iArtifact {
     });
     // Set the z-index to be behind everything
     this.z = -2;
-    this.goal = args.goal;
+    this.goal = args.goal ?? 0;
     this.triggerOnExit = args.triggerOnExit ?? null;
 
     const closed = ex.Animation.fromSpriteSheet(

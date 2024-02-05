@@ -64,7 +64,7 @@ const passages: { [node: string]: NodeGates } = {
     next: { scene: "level1", gate: "startGate" },
   },
   level1: {
-    startGate: { scene: "level1" },
+    startGate: { scene: "level1", gate: "startGate" },
     toLevel2: { scene: "level2", gate: "toLevel1" },
     next: { scene: "level2" },
   },
