@@ -21,14 +21,18 @@ export abstract class Scene extends ex.Scene {
   onActivatePop(): void {}
   onEnterThroughGate(entryPos: ex.Vector | null, gate: string): void {}
 
-  getGatePos(name: string): ex.Vector | null {
+  gotoGate(context: ex.SceneActivationContext<SceneActivationData>, name: string) {
     const matches: ex.Entity[] = this.world.entityManager.getByName(name);
+    let entryPos: ex.Vector | null = null;
+
     if (matches.length != 1) {
       console.warn("no such gate", name);
-      return null;
+    } else {
+      const gate = matches[0];
+      gate.emit("exitGate");
+      entryPos = gate.get(ex.TransformComponent)!.pos;
     }
-    const gate = matches[0];
-    return gate.get(ex.TransformComponent)!.pos;
+    this.onEnterThroughGate(entryPos, name);
   }
   onActivate(context: ex.SceneActivationContext<SceneActivationData>): void {
     switch (context.data?.method) {
@@ -39,8 +43,7 @@ export abstract class Scene extends ex.Scene {
         this.onActivatePop();
         break;
       case "goto":
-        const entryPos = this.getGatePos(context.data?.gate);
-        this.onEnterThroughGate(entryPos, context.data?.gate);
+        this.gotoGate(context, context.data?.gate);
         break;
       default:
         console.error("unexpected activation method in:", context.data);

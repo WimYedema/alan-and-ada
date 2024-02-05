@@ -9,7 +9,6 @@ import { Lift } from "../actors/lift";
 
 export class Level3 extends LevelLayout implements iSceneNode {
   thisScene = "level3";
-  introScene = "beforeLevel3";
 
   // Dit is de grootte van je level in (Breedte, Hoogte). Aanpassen mag!
   levelSize = new ex.Vector(22, 22);
@@ -18,6 +17,15 @@ export class Level3 extends LevelLayout implements iSceneNode {
     // Dit is een voorbeeld van een level, maar hij is nog niet af.
     // Je mag alles veranderen, en dingen toevoegen.
     engine.add(new Floor({ x: 0, y: 1, right: 22 }));
+    engine.add(
+      new Gate({
+        x: 0,
+        y: 1,
+        goal: 0,
+        name: "toLevel2",
+        triggerOnExit: "beforeLevel3",
+      }),
+    );
     this.playerStartsAt({ x: 2, y: 1 });
 
     engine.add(new Floor({ x: 8, y: 5, right: 11 }));

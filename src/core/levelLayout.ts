@@ -19,7 +19,6 @@ import { Scene, sceneStack } from "./sceneStack";
  */
 export abstract class LevelLayout extends Scene implements iSceneNode {
   abstract thisScene: string;
-  protected introScene?: string;
   protected levelSize?: ex.Vector;
 
   protected playerStart: iLocation = { x: 2, y: 2 };
@@ -77,9 +76,6 @@ export abstract class LevelLayout extends Scene implements iSceneNode {
     );
   }
   onEnterThroughGate(entryPos: ex.Vector | null, gate: string): void {
-    if (this.introScene !== undefined) {
-      sceneStack.push(this.engine, this.introScene);
-    }
     if (this.player === undefined) {
       return;
     }

@@ -54,14 +54,35 @@ addNode(new Example());
 addNode(new Finish());
 addNode(new GameOver());
 
-const passages: { [id: string]: { scene: string; gate?: string } } = {
-  startGame: { scene: "level1", gate: "startGate" },
-  startGate: { scene: "level1" },
-  toLevel2: { scene: "level2" },
-  toLevel3: { scene: "level3" },
-  toExample: { scene: "example", gate: "ExampleToLevel3" },
-  ExampleToLevel3: { scene: "level3", gate: "toExample" },
-  ExampleToFinish: { scene: "finish" },
+class NodeGates {
+  [gate: string]: { scene: string; gate?: string };
+}
+
+const passages: { [node: string]: NodeGates } = {
+  playerSelect: {
+    startGame: { scene: "level1", gate: "startGate" },
+    next: { scene: "level1", gate: "startGate" },
+  },
+  level1: {
+    startGate: { scene: "level1" },
+    toLevel2: { scene: "level2", gate: "toLevel1" },
+    next: { scene: "level2" },
+  },
+  level2: {
+    toLevel3: { scene: "level3", gate: "toLevel2" },
+    toLevel1: { scene: "level1", gate: "toLevel2" },
+    next: { scene: "level3" },
+  },
+  level3: {
+    toExample: { scene: "example", gate: "ExampleToLevel3" },
+    toLevel2: { scene: "level2", gate: "toLevel3" },
+    next: { scene: "example", gate: "ExampleToLevel3" },
+  },
+  example: {
+    ExampleToLevel3: { scene: "level3", gate: "toExample" },
+    ExampleToFinish: { scene: "finish" },
+    next: { scene: "finish" },
+  },
 };
 
 const st = JSON.parse(window.localStorage.getItem("stats") || "{}");
@@ -76,7 +97,7 @@ engine.on("preupdate", () => {
     engine.showDebug(showDebug);
   } else if (showDebug) {
     if (engine.input.keyboard.wasPressed(ex.Input.Keys.KeyN)) {
-      console.error("Cannot move to the next scene yet");
+      stats.inGate = "next";
     } else if (engine.input.keyboard.wasPressed(ex.Input.Keys.Key1)) {
       stats.scaleTarget = 1;
       engine.currentScene.camera.zoomOverTime(1 / stats.scaleTarget, 2000);
@@ -90,17 +111,12 @@ engine.on("preupdate", () => {
     }
   }
 
-  if (stats.inGate !== null) {
-    let target: string | null = null;
-    if (stats.inGate !== null && stats.inGate in passages) {
-      console.log("entered gate", stats.inGate);
-      stats.currentNode = passages[stats.inGate].scene;
-      if (passages[stats.inGate].gate !== undefined) {
-        target = passages[stats.inGate].gate!;
-      }
-      sceneStack.goto(engine, passages[stats.inGate].scene, target ?? "");
-      stats.inGate = null;
-    }
+  if (stats.inGate !== null && stats.currentNode in passages) {
+    console.log("entered gate", stats.inGate);
+    const passage = passages[stats.currentNode][stats.inGate];
+    stats.currentNode = passage.scene;
+    sceneStack.goto(engine, passage.scene, passage.gate ?? "");
+    stats.inGate = null;
     window.localStorage.setItem("stats", JSON.stringify(stats));
   } else if (stats.gameOver) {
     stats.currentNode = "gameover";

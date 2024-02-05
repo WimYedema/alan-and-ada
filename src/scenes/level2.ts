@@ -5,11 +5,19 @@ import { Gate } from "../actors/gate";
 import { iSceneNode } from "../core/cutScene";
 
 export class Level2 extends LevelLayout implements iSceneNode {
-  introScene = "beforeLevel1";
   thisScene = "level2";
 
   layoutLevel(engine: ex.Engine) {
     this.playerStartsAt({ x: 2, y: 3 });
+    engine.add(
+      new Gate({
+        x: 1,
+        y: 2,
+        goal: 0,
+        name: "toLevel1",
+        triggerOnExit: "beforeLevel2",
+      }),
+    );
     engine.add(new Wall({ x: 0, y: 2, up: 6 }));
     engine.add(new Floor({ x: 1, y: 2, right: 2 }));
 

@@ -10,10 +10,12 @@ import { stats } from "../core/stats";
 import { iLocation } from "../core/location";
 import { iArtifact } from "../core/iartifact";
 import { GameActor } from "../core/actor";
+import { sceneStack } from "../core/sceneStack";
 
 export interface GateArgs extends iLocation {
   goal: number;
   name?: string;
+  triggerOnExit?: string;
 }
 
 export class GateState {
@@ -27,6 +29,7 @@ export class GateState {
 export class Gate extends GameActor<GateState> implements iArtifact {
   protected _state = new GateState();
   goal: number = 0;
+  protected triggerOnExit: string | null = null;
   constructor(args: GateArgs) {
     super({
       name: args.name ?? "Gate",
@@ -45,6 +48,8 @@ export class Gate extends GameActor<GateState> implements iArtifact {
     // Set the z-index to be behind everything
     this.z = -2;
     this.goal = args.goal;
+    this.triggerOnExit = args.triggerOnExit ?? null;
+
     const closed = ex.Animation.fromSpriteSheet(
       gateClosedSpriteSheet,
       [0],
@@ -57,10 +62,17 @@ export class Gate extends GameActor<GateState> implements iArtifact {
 
     this.on("collisionstart", (evt) => this.onCollisionStart(evt));
     this.on("collisionend", (evt) => this.onCollisionEnd(evt));
+    this.on("exitGate", (evt) => this.onExitGate());
 
     this.graphics.onPostDraw = () => {
       this.onPostDraw();
     };
+  }
+  onExitGate() {
+    console.log("exit gate", this.name);
+    if (this.triggerOnExit !== null) {
+      sceneStack.push(this.scene.engine, this.triggerOnExit);
+    }
   }
   onActivate() {
     this._state.goal = stats.score + this.goal;
