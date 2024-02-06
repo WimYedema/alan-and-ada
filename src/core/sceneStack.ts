@@ -26,11 +26,11 @@ export abstract class Scene extends ex.Scene {
     name: string,
   ) {
     const matches: ex.Entity[] = this.world.entityManager.getByName(name);
-    let entryPos: ex.Vector | null = null;
+    let entryPos: ex.Vector = ex.vec(0, 0);
 
     console.log("goto gate", name);
     if (matches.length != 1) {
-      console.warn("no such gate", name);
+      console.error("no such gate", name);
     } else {
       const gate = matches[0];
       gate.emit("exitGate");

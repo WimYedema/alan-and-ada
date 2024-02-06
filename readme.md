@@ -3,8 +3,6 @@
 Play the [game](https://wimyedema.github.io/alan-and-ada/), read the [docs](https://wimyedema.github.io/alan-and-ada/docs/) and
 start [editing](https://vscode.dev/github/WimYedema/alan-and-ada)!
 
-
-
 ## Running locally
 
 - Using [nodejs](https://nodejs.org/en/) and [npm](https://www.npmjs.com/)

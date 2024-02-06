@@ -8,7 +8,6 @@ export class Level1 extends LevelLayout implements iSceneNode {
   thisScene = "level1";
 
   layoutLevel(engine: ex.Engine) {
-    this.playerStartsAt({ x: 2, y: 2 });
     engine.add(
       new Gate({
         x: 1,

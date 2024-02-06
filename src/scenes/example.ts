@@ -35,7 +35,6 @@ export class Example extends LevelLayout implements iSceneNode {
       new Lift({ startPos: { x: 5, y: 16 }, endPos: { x: 16, y: 22 - 6 } }),
     );
 
-    this.playerStartsAt({ x: 6, y: 10 });
     engine.add(new Gate({ x: 5, y: 9, name: "ExampleToLevel3" }));
     engine.add(new Baddie({ x: 6, y: 7 }));
     engine.add(new Baddie({ x: 10, y: 7 }));

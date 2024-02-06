@@ -21,7 +21,6 @@ export abstract class LevelLayout extends Scene implements iSceneNode {
   abstract thisScene: string;
   protected levelSize?: iLocation;
 
-  protected playerStart: iLocation = { x: 2, y: 2 };
   protected player?: Player;
   protected assignment: string = "";
 
@@ -34,14 +33,6 @@ export abstract class LevelLayout extends Scene implements iSceneNode {
    */
   abstract layoutLevel(engine: ex.Engine): void;
 
-  /**
-   * Set the start location of the player.
-   *
-   * @param args The location where the player will start.
-   */
-  playerStartsAt(args: iLocation) {
-    this.playerStart = args;
-  }
   /**
    * @experimental
    *
@@ -75,14 +66,11 @@ export abstract class LevelLayout extends Scene implements iSceneNode {
       this.assignment
     );
   }
-  onEnterThroughGate(entryPos: ex.Vector | null, gate: string): void {
+  onEnterThroughGate(entryPos: ex.Vector, gate: string): void {
     if (this.player === undefined) {
       return;
     }
-    let pos = this.playerStart;
-    if (entryPos !== null) {
-      pos = sceneSpace(entryPos!);
-    }
+    let pos = sceneSpace(entryPos!);
     const startPos = { x: pos.x + 1, y: pos.y };
     this.player.pos = gridSpace({
       x: startPos.x,

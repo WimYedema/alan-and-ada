@@ -25,7 +25,6 @@ export class Level3 extends LevelLayout implements iSceneNode {
         triggerOnExit: "beforeLevel3",
       }),
     );
-    this.playerStartsAt({ x: 2, y: 1 });
 
     engine.add(new Floor({ x: 8, y: 5, right: 11 }));
     engine.add(new Wall({ x: 7, y: 5, up: 2 }));
