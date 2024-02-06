@@ -19,7 +19,7 @@ import { Scene, sceneStack } from "./sceneStack";
  */
 export abstract class LevelLayout extends Scene implements iSceneNode {
   abstract thisScene: string;
-  protected levelSize?: ex.Vector;
+  protected levelSize?: iLocation;
 
   protected playerStart: iLocation = { x: 2, y: 2 };
   protected player?: Player;
@@ -88,23 +88,21 @@ export abstract class LevelLayout extends Scene implements iSceneNode {
       x: startPos.x,
       y: startPos.y,
     });
+    this.camera.pos = this.player.pos.clone();
+    console.log("move player to", startPos);
     this.initCamera(this.player);
     if (this.levelSize !== undefined) {
       this.camera.strategy.lockToActor(this.player);
+      const box = gridSpace(this.levelSize);
       this.camera.strategy.limitCameraBounds(
-        new ex.BoundingBox(
-          0,
-          -this.levelSize.y * tileSize,
-          this.levelSize.x * tileSize,
-          0,
-        ),
+        new ex.BoundingBox(0, box.y, box.x, 0),
       );
     }
   }
   onInitialize(engine: ex.Engine) {
     this.layoutLevel(engine);
 
-    this.player = new Player(this.playerStart.x, this.playerStart.y);
+    this.player = new Player(0, 0);
 
     engine.add(this.player);
     this.assignment = "src/scenes/" + this.thisScene + ".ts";

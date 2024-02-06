@@ -11,7 +11,7 @@ export class Level3 extends LevelLayout implements iSceneNode {
   thisScene = "level3";
 
   // Dit is de grootte van je level in (Breedte, Hoogte). Aanpassen mag!
-  levelSize = new ex.Vector(22, 22);
+  levelSize = { x: 22, y: 22 };
 
   layoutLevel(engine: ex.Engine) {
     // Dit is een voorbeeld van een level, maar hij is nog niet af.

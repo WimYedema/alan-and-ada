@@ -85,9 +85,6 @@ const passages: { [node: string]: NodeGates } = {
   },
 };
 
-const st = JSON.parse(window.localStorage.getItem("stats") || "{}");
-stats.load(st);
-sceneStack.resetTo(engine, stats.currentNode);
 let showDebug = false;
 
 // Game events to handle
@@ -131,6 +128,13 @@ engine.on("gameover", () => {
 // Start the engine
 engine.start(loader).then(() => {
   console.log("game start");
+
+  const st = JSON.parse(window.localStorage.getItem("stats") || "{}");
+  stats.load(st);
+  console.log("restart at", stats.currentNode, stats.lastGate);
+  sceneStack.push(engine, "playerSelect");
+  sceneStack.goto(engine, stats.currentNode, stats.lastGate ?? "");
+
   // Detect hidden and visible outside of excalibur: it blocks events when the
   // engine is stopped so we cannot detect when to resume.
   document.addEventListener("visibilitychange", () => {

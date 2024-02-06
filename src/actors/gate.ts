@@ -70,6 +70,7 @@ export class Gate extends GameActor<GateState> implements iArtifact {
   }
   onExitGate() {
     console.log("exit gate", this.name);
+    stats.lastGate = this.name;
     if (this.triggerOnExit !== null) {
       sceneStack.push(this.scene.engine, this.triggerOnExit);
     }

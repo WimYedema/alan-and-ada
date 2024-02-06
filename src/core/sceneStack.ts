@@ -21,10 +21,14 @@ export abstract class Scene extends ex.Scene {
   onActivatePop(): void {}
   onEnterThroughGate(entryPos: ex.Vector | null, gate: string): void {}
 
-  gotoGate(context: ex.SceneActivationContext<SceneActivationData>, name: string) {
+  gotoGate(
+    context: ex.SceneActivationContext<SceneActivationData>,
+    name: string,
+  ) {
     const matches: ex.Entity[] = this.world.entityManager.getByName(name);
     let entryPos: ex.Vector | null = null;
 
+    console.log("goto gate", name);
     if (matches.length != 1) {
       console.warn("no such gate", name);
     } else {
@@ -76,6 +80,7 @@ export class SceneStack {
     }
   }
   goto(engine: ex.Engine, name: string, gate: string) {
+    console.log("goto scene", name, "gate", gate);
     stats.currentNode = name;
     this.stack[-1] = name;
     engine.goToScene(name, { method: "goto", gate: gate });

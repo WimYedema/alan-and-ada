@@ -129,6 +129,7 @@ export class Player extends GameActor<PlayerState> {
     this.on("exitviewport", (evt) => this.onExitViewport(evt));
   }
   onExitViewport(evt: ex.ExitViewPortEvent) {
+    console.log("game over caused by exit viewport @", this.pos);
     stats.gameOver = true;
   }
 

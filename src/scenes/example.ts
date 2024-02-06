@@ -13,7 +13,7 @@ import { Lift } from "../actors/lift";
  */
 export class Example extends LevelLayout implements iSceneNode {
   thisScene = "example";
-  levelSize = new ex.Vector(22, 22);
+  levelSize = { x: 22, y: 22 };
 
   layoutLevel(engine: ex.Engine) {
     engine.add(new Floor({ x: 0, y: 3, right: 17 }));
