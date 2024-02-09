@@ -21,7 +21,8 @@ export class Level3 extends LevelLayout implements iSceneNode {
       new Gate({
         x: 0,
         y: 1,
-        name: "toLevel2",
+        name: "entry",
+        to: "level2/exit",
         triggerOnExit: "beforeLevel3",
       }),
     );
@@ -37,7 +38,7 @@ export class Level3 extends LevelLayout implements iSceneNode {
     engine.add(new Lift({ startPos: { x: 16, y: 6 }, endPos: { x: 2, y: 6 } }));
 
     engine.add(new Floor({ x: 5, y: 10, right: 16 }));
-    engine.add(new Gate({ x: 13, y: 10, name: "toExample" }));
+    engine.add(new Gate({ x: 13, y: 10, name: "exit", to: "example/entry" }));
 
     // -----
     // Hier zijn nog een paar voorbeelden van dingen die je aan je level kan toevoegen.

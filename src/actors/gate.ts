@@ -13,8 +13,9 @@ import { GameActor } from "../core/actor";
 import { sceneStack } from "../core/sceneStack";
 
 export interface GateArgs extends iLocation {
+  name: string;
+  to: string;
   goal?: number;
-  name?: string;
   triggerOnExit?: string;
 }
 
@@ -29,6 +30,7 @@ export class GateState {
 export class Gate extends GameActor<GateState> implements iArtifact {
   protected _state = new GateState();
   goal: number = 0;
+  to: string;
   protected triggerOnExit: string | null = null;
   constructor(args: GateArgs) {
     super({
@@ -48,6 +50,7 @@ export class Gate extends GameActor<GateState> implements iArtifact {
     // Set the z-index to be behind everything
     this.z = -2;
     this.goal = args.goal ?? 0;
+    this.to = args.to;
     this.triggerOnExit = args.triggerOnExit ?? null;
 
     const closed = ex.Animation.fromSpriteSheet(
@@ -90,7 +93,8 @@ export class Gate extends GameActor<GateState> implements iArtifact {
   }
   activateArtifact(player: Player) {
     if (this._state.isOpen) {
-      stats.inGate = this.name;
+      const [scene, gate] = this.to.split("/", 2);
+      sceneStack.goto(this.scene.engine, scene, gate);
     }
   }
   onCollisionStart(evt: ex.CollisionStartEvent) {

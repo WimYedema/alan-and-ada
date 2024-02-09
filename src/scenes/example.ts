@@ -35,11 +35,11 @@ export class Example extends LevelLayout implements iSceneNode {
       new Lift({ startPos: { x: 5, y: 16 }, endPos: { x: 16, y: 22 - 6 } }),
     );
 
-    engine.add(new Gate({ x: 5, y: 9, name: "ExampleToLevel3" }));
+    engine.add(new Gate({ x: 5, y: 9, name: "entry", to: "level3/exit" }));
     engine.add(new Baddie({ x: 6, y: 7 }));
     engine.add(new Baddie({ x: 10, y: 7 }));
     engine.add(new Floor({ x: 13, y: 11, right: 4 }));
-    engine.add(new Gate({ x: 14, y: 11, goal: 2, name: "ExampleToFinish" }));
+    engine.add(new Gate({ x: 14, y: 11, goal: 2, name: "exit", to: "finish" }));
     engine.add(new Floor({ x: 16, y: 6, right: 1 }));
     engine.add(new Wall({ x: 17, y: 3, up: 20 }));
   }

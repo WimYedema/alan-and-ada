@@ -61,26 +61,17 @@ class NodeGates {
 const passages: { [node: string]: NodeGates } = {
   playerSelect: {
     startGame: { scene: "level1", gate: "startGate" },
-    next: { scene: "level1", gate: "startGate" },
   },
   level1: {
-    startGate: { scene: "level1", gate: "startGate" },
-    toLevel2: { scene: "level2", gate: "toLevel1" },
-    next: { scene: "level2" },
+    next: { scene: "level2", gate: "startGate" },
   },
   level2: {
-    toLevel3: { scene: "level3", gate: "toLevel2" },
-    toLevel1: { scene: "level1", gate: "toLevel2" },
-    next: { scene: "level3" },
+    next: { scene: "level3", gate: "entry" },
   },
   level3: {
-    toExample: { scene: "example", gate: "ExampleToLevel3" },
-    toLevel2: { scene: "level2", gate: "toLevel3" },
-    next: { scene: "example", gate: "ExampleToLevel3" },
+    next: { scene: "example", gate: "entry" },
   },
   example: {
-    ExampleToLevel3: { scene: "level3", gate: "toExample" },
-    ExampleToFinish: { scene: "finish" },
     next: { scene: "finish" },
   },
 };
@@ -108,15 +99,11 @@ engine.on("preupdate", () => {
     }
   }
 
-  if (stats.inGate !== null && stats.currentNode in passages) {
-    console.log("entered gate", stats.inGate);
-    const passage = passages[stats.currentNode][stats.inGate];
-    stats.currentNode = passage.scene;
-    sceneStack.goto(engine, passage.scene, passage.gate ?? "");
-    stats.inGate = null;
-    window.localStorage.setItem("stats", JSON.stringify(stats));
-  } else if (stats.gameOver) {
-    stats.currentNode = "gameover";
+  // if (stats.inGate !== null && stats.currentNode in passages) {
+  //   stats.inGate = null;
+  //   window.localStorage.setItem("stats", JSON.stringify(stats));
+  // }
+  if (stats.gameOver) {
     sceneStack.resetTo(engine, "gameover");
   }
 });

@@ -13,6 +13,7 @@ export class Level1 extends LevelLayout implements iSceneNode {
         x: 1,
         y: 0,
         name: "startGate",
+        to: "level1/startGate",
         triggerOnExit: "beforeLevel1",
       }),
     );
@@ -32,7 +33,7 @@ export class Level1 extends LevelLayout implements iSceneNode {
     // // ---
 
     engine.add(new Floor({ x: 9, y: 0, right: 2 }));
-    engine.add(new Gate({ x: 9, y: 0, name: "toLevel2" }));
+    engine.add(new Gate({ x: 9, y: 0, name: "exit", to: "level2/entry" }));
     engine.add(new Wall({ x: 11, y: 0, up: 6 }));
   }
 }
