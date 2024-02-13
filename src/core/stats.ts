@@ -3,13 +3,17 @@ export class Stats {
   public health: number = 5;
   public assignment: string = "";
   public gameOver: boolean = false;
-  public inGate: string | null = null;
   public lastGate: string | null = null;
   public currentNode: string = "playerSelect";
   public score: number = 0;
   public scaleTarget: number = 1;
 
-  load(d: any) {
+  save() {
+    console.log("saving stats");
+    window.localStorage.setItem("stats", JSON.stringify(this));
+  }
+  load() {
+    const d = JSON.parse(window.localStorage.getItem("stats") || "{}");
     this.charName = d["charName"] ?? this.charName;
     this.health = d["health"] ?? this.health;
     this.assignment = d["assignment"] ?? this.assignment;

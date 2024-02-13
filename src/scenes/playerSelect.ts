@@ -1,9 +1,10 @@
 import * as ex from "excalibur";
-import { boy, girl, playerCharacters } from "../core/resources";
+import { boy, girl, playerCharacters, sceneSpace } from "../core/resources";
 import { stats } from "../core/stats";
 import { iCharacter } from "../core/icharacter";
 import { TextBubble } from "../core/textBubble";
 import { iSceneNode } from "../core/cutScene";
+import { sceneStack } from "../core/sceneStack";
 
 class SelectorButton extends ex.ScreenElement {
   charName: string;
@@ -43,7 +44,7 @@ class SelectorButton extends ex.ScreenElement {
 
     this.on("pointerup", () => {
       stats.charName = this.charName;
-      stats.inGate = "startGame";
+      sceneStack.goto(this.scene.engine, "level1", "startGate");
     });
 
     this.on("pointerenter", () => {

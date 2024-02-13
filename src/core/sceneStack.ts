@@ -32,6 +32,8 @@ export abstract class Scene extends ex.Scene {
     if (matches.length != 1) {
       console.error("no such gate", name);
     } else {
+      stats.lastGate = name;
+      stats.save();
       const gate = matches[0];
       gate.emit("exitGate");
       entryPos = gate.get(ex.TransformComponent)!.pos;

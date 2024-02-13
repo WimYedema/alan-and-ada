@@ -60,10 +60,10 @@ class NodeGates {
 
 const passages: { [node: string]: NodeGates } = {
   playerSelect: {
-    startGame: { scene: "level1", gate: "startGate" },
+    next: { scene: "level1", gate: "startGate" },
   },
   level1: {
-    next: { scene: "level2", gate: "startGate" },
+    next: { scene: "level2", gate: "entry" },
   },
   level2: {
     next: { scene: "level3", gate: "entry" },
@@ -85,7 +85,13 @@ engine.on("preupdate", () => {
     engine.showDebug(showDebug);
   } else if (showDebug) {
     if (engine.input.keyboard.wasPressed(ex.Input.Keys.KeyN)) {
-      stats.inGate = "next";
+      if (stats.currentNode in passages) {
+        sceneStack.goto(
+          engine,
+          passages[stats.currentNode]["next"].scene,
+          passages[stats.currentNode]["next"].gate ?? "",
+        );
+      }
     } else if (engine.input.keyboard.wasPressed(ex.Input.Keys.Key1)) {
       stats.scaleTarget = 1;
       engine.currentScene.camera.zoomOverTime(1 / stats.scaleTarget, 2000);
@@ -95,14 +101,9 @@ engine.on("preupdate", () => {
     } else if (engine.input.keyboard.wasPressed(ex.Input.Keys.KeyR)) {
       stats.reset();
       sceneStack.resetTo(engine, "playerSelect");
-      window.localStorage.setItem("stats", JSON.stringify(stats));
     }
   }
 
-  // if (stats.inGate !== null && stats.currentNode in passages) {
-  //   stats.inGate = null;
-  //   window.localStorage.setItem("stats", JSON.stringify(stats));
-  // }
   if (stats.gameOver) {
     sceneStack.resetTo(engine, "gameover");
   }
@@ -116,8 +117,7 @@ engine.on("gameover", () => {
 engine.start(loader).then(() => {
   console.log("game start");
 
-  const st = JSON.parse(window.localStorage.getItem("stats") || "{}");
-  stats.load(st);
+  stats.load();
   console.log("restart at", stats.currentNode, stats.lastGate);
   sceneStack.push(engine, "playerSelect");
   sceneStack.goto(engine, stats.currentNode, stats.lastGate ?? "");
