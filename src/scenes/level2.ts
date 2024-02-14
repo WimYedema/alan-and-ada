@@ -3,9 +3,11 @@ import { LevelLayout } from "../core/levelLayout";
 import { Floor, Wall } from "../actors/ground";
 import { Gate } from "../actors/gate";
 import { iSceneNode } from "../core/cutScene";
+import { GateLocation } from "../core/gateLocation";
 
 export class Level2 extends LevelLayout implements iSceneNode {
   thisScene = "level2";
+  nextScene = new GateLocation("level3", "entry");
 
   layoutLevel(engine: ex.Engine) {
     engine.add(

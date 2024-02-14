@@ -6,9 +6,11 @@ import { LevelLayout } from "../core/levelLayout";
 import { iSceneNode } from "../core/cutScene";
 import { Potion } from "../actors/potion";
 import { Lift } from "../actors/lift";
+import { GateLocation } from "../core/gateLocation";
 
 export class Level3 extends LevelLayout implements iSceneNode {
   thisScene = "level3";
+  nextScene = new GateLocation("example", "entry");
 
   // Dit is de grootte van je level in (Breedte, Hoogte). Aanpassen mag!
   levelSize = { x: 22, y: 22 };

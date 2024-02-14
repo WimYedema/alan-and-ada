@@ -5,7 +5,8 @@ import { iSceneNode } from "./cutScene";
 import { iLocation } from "./location";
 import { gridSpace, sceneSpace, tileSize } from "./resources";
 import { Floor, Wall } from "../actors/ground";
-import { Scene, sceneStack } from "./sceneStack";
+import { Scene } from "./sceneStack";
+import { GateLocation } from "./gateLocation";
 
 /**
  * The LevelLayout is the foundation for all *playable* levels. It set the
@@ -19,6 +20,7 @@ import { Scene, sceneStack } from "./sceneStack";
  */
 export abstract class LevelLayout extends Scene implements iSceneNode {
   abstract thisScene: string;
+  abstract nextScene: GateLocation;
   protected levelSize?: iLocation;
 
   protected player?: Player;

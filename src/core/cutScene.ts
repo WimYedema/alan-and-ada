@@ -5,6 +5,7 @@ import { playerCharacters } from "./resources";
 import { SceneActor } from "./actor";
 import { iLocation } from "./location";
 import { sceneStack } from "./sceneStack";
+import { GateLocation } from "./gateLocation";
 
 /**
  * A SceneNode provides the links between scenes.
@@ -14,6 +15,7 @@ export interface iSceneNode {
    * The (unique) name of this scene.
    */
   thisScene: string;
+  nextScene: GateLocation;
 }
 
 export class Speaker extends SceneActor<null> {

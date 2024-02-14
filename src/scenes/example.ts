@@ -6,6 +6,7 @@ import { LevelLayout } from "../core/levelLayout";
 import { iSceneNode } from "../core/cutScene";
 import { Potion } from "../actors/potion";
 import { Lift } from "../actors/lift";
+import { GateLocation } from "../core/gateLocation";
 
 /**
  * This is an example of how you can make a small but fun level, with things
@@ -13,6 +14,7 @@ import { Lift } from "../actors/lift";
  */
 export class Example extends LevelLayout implements iSceneNode {
   thisScene = "example";
+  nextScene = new GateLocation("finish");
   levelSize = { x: 22, y: 22 };
 
   layoutLevel(engine: ex.Engine) {

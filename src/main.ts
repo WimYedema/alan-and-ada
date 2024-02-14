@@ -44,37 +44,16 @@ function addNode(node: iSceneNode & ex.Scene) {
 const playerSelect = new PlayerSelect();
 addNode(playerSelect);
 
-addNode(new BeforeLevel1());
 addNode(new Level1());
-addNode(new BeforeLevel2());
 addNode(new Level2());
-addNode(new BeforeLevel3());
 addNode(new Level3());
 addNode(new Example());
 addNode(new Finish());
 addNode(new GameOver());
 
-class NodeGates {
-  [gate: string]: { scene: string; gate?: string };
-}
-
-const passages: { [node: string]: NodeGates } = {
-  playerSelect: {
-    next: { scene: "level1", gate: "startGate" },
-  },
-  level1: {
-    next: { scene: "level2", gate: "entry" },
-  },
-  level2: {
-    next: { scene: "level3", gate: "entry" },
-  },
-  level3: {
-    next: { scene: "example", gate: "entry" },
-  },
-  example: {
-    next: { scene: "finish" },
-  },
-};
+engine.add("beforeLevel1", new BeforeLevel1());
+engine.add("beforeLevel2", new BeforeLevel2());
+engine.add("beforeLevel3", new BeforeLevel3());
 
 let showDebug = false;
 
@@ -85,13 +64,8 @@ engine.on("preupdate", () => {
     engine.showDebug(showDebug);
   } else if (showDebug) {
     if (engine.input.keyboard.wasPressed(ex.Input.Keys.KeyN)) {
-      if (stats.currentNode in passages) {
-        sceneStack.goto(
-          engine,
-          passages[stats.currentNode]["next"].scene,
-          passages[stats.currentNode]["next"].gate ?? "",
-        );
-      }
+      const next = nodes[stats.currentNode].nextScene;
+      sceneStack.goto(engine, next.scene, next.gate ?? "");
     } else if (engine.input.keyboard.wasPressed(ex.Input.Keys.Key1)) {
       stats.scaleTarget = 1;
       engine.currentScene.camera.zoomOverTime(1 / stats.scaleTarget, 2000);

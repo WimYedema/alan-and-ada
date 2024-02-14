@@ -5,6 +5,7 @@ import { iCharacter } from "../core/icharacter";
 import { TextBubble } from "../core/textBubble";
 import { iSceneNode } from "../core/cutScene";
 import { sceneStack } from "../core/sceneStack";
+import { GateLocation } from "../core/gateLocation";
 
 class SelectorButton extends ex.ScreenElement {
   charName: string;
@@ -73,6 +74,7 @@ function sequence(scene: ex.Scene, actors: ex.Actor[]): void {
 
 export class PlayerSelect extends ex.Scene implements iSceneNode {
   thisScene: string = "playerSelect";
+  nextScene = new GateLocation("level1", "entry");
 
   onInitialize(engine: ex.Engine) {
     engine.add(

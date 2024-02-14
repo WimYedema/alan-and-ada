@@ -1,9 +1,11 @@
 import * as ex from "excalibur";
 import { iSceneNode } from "../core/cutScene";
 import { stats } from "../core/stats";
+import { GateLocation } from "../core/gateLocation";
 
 export class Finish extends ex.Scene implements iSceneNode {
   thisScene = "finish";
+  nextScene = new GateLocation("playerSelect");
 
   onInitialize(engine: ex.Engine) {
     const congrats = new ex.Label({
